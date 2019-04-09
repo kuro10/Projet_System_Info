@@ -4,111 +4,55 @@
 #include "interpreteur.h"
 
 ligneinter tab_inter[1000];
-int md[1024];
+int memoire[1024];
 int ip;
-int rg[16];
+int registre[16];
 int ligne = 0;
 
-void ajout_ligne_inter(char * operation, char * p1, char * p2){
+void ajout_ligneinter (char * op, int rA, int rB, int rC) {
 	strcpy(tab_inter[ligne].op , operation);
-	strcpy(tab_inter[ligne].p1 , p1);
-	strcpy(tab_inter[ligne].p2 , p2);
-	ligne+=1;
+	tab_inter[ligne].rA = rA;
+	tab_inter[ligne].rB = rB;
+	tab_inter[ligne].rC = rC;	
+	ligne++;
 }
 
-void changejumpline(int linenum, char* value){
-	strcpy(tab_inter[linenum].p1 , value);
+void afficher_ligne(ligneinter l) {
+	printf("Operateur : %s | Registre 1 : %s | Registre 2 : %s | Registre 3 : %s\n", l.op, l.rA, l.rB, l.rC);
 }
 
-void affiche_line(ligneinter l){
-	printf ("op: %s, p1: %s, p2: %s\n",l.op, l.p1, l.p2 ); 
-}
-
-
-void affiche_inter(){	
-	int i;
-	for(i=0;i<ligne;i++){
-		printf("line %d  ",i);
-		affiche_line(tab_inter[i]);					
-   	}
-}
-
-
-int getligne(){
-	return ligne;
-}
-
-ligneinter getligne(int i){
-	return tab_inter[i];
-}
-
-void lire(){  
-    FILE *f;
-	f = fopen("assembleur.txt","r");
-	char * line=NULL;
-	size_t len=0;
-	ssize_t read;
-
-	if(f==NULL){
-		printf("fail to open the assembleur\n");
-		exit(1);
+void afficher_tabinter(void) {
+	for (int i = 0; i < ligne; i++) {
+		afficher_ligne(tab_inter[i]);
 	}
-	while((read=getline(&line,&len,f))!=-1){
-		char * token = strtok(line," ");
-		char * tokenarray[4];
-		int i=0;
-   		while(token){
-			tokenarray[i]=token;
-			i++;
-			token = strtok(NULL, " ");
-		}
-		ajout_ligne_inter(tokenarray[0],tokenarray[1],tokenarray[2]);
-	}
-
-	fclose(f);
-	if(line){
-		free(line);
-	}
+	printf("\n");
 }
 
 void interpreter () {
 	int i=0;	
 	lire ();
 	while(i<ligne){
-		char * op= tab_inter[i].op;
-		char * p1= tab_inter[i].p1;
-		char * p2= tab_inter[i].p2;
+		char * op;
+		strcpy(op, tab_inter[i].op);
+		int rA = tab_inter[i].rA;
+		int rB = tab_inter[i].rB;
+		int rC = tab_inter[i].rC;
 
-		int j =-1;
-		if(strcmp("AFC",op)==0){
-			j=0;
-		}else if(strcmp("Store",op)==0){
-			j=1;
-		}
-
-		switch (j) {
-    		case 0: 
-				rg[0]= atoi(p2);
-				break;
-			case 1: 
-				md[atoi(p1)]=rg[0];
-				break;
-			default: 
-				break;
-		}
+		if (strcmp(op, "ADD")) {
+			registre[rC] = registre[rA] + registre[rB];
+		} else if (strcmp(op, "SUB")) {
+			registre[rC] = registre[rA] - registre[rB];
+		} else if (strcmp(op, "MUL")) {
+			registre[rC] = registre[rA] * registre[rB];
+		} else if (strcmp(op, "DIV")) {
+			registre[rC] = registre[rA] / registre[rB];
+		} else if (strcmp(op, "LOAD")) {
+			registre[rC] = registre[rA] + registre[rB];
+		} else if (strcmp(op, "STORE")) {
+			registre[rC] = registre[rA] + registre[rB];
+		} else if (strcmp(op, "AFC")) {
+			registre[rC] = registre[rA] + registre[rB];
+		} else if
 		i++;
 	}
 }
-
-
-char * inttochare(int o){
-	char *p, text[10];
-
-	sprintf(text,"%d",o);
-	p = text;
-	return p;
-}
-
-
-void afficherm() {}
-

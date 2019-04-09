@@ -1,15 +1,13 @@
 typedef struct ligneinter{
 	char op[10];
-	char p1[5];
-	char p2[5];
+	int rA;
+	int rB;
+	int rC;
 } ligneinter;
 
-void ajout_ligne_inter(char * operation, char * p1, char * p2);
+void ajout_ligneinter (char * op, int rA, int rB, int rC);
+void afficher_tabinter();
+void interpreter();
 
-void affiche_inter();
 
-int getligne();
 
-ligneinter getligne(int indice);
-
-void changejumpline(int linenum, char* value);

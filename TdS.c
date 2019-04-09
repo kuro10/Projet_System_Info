@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "TdS.h"
 
@@ -62,7 +63,6 @@ void afficher_table(void) {
 	}
 	printf("\n");
 }
-
 /*int main() {
 	push("Hieu", 20, 626);
 

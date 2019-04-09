@@ -27,4 +27,5 @@ void incr_profondeur(void);
 void decr_profondeur(void);
 void push(char * type, char * nom);
 void afficher_table(void);
+void ecrire(char * contenu);
 //Type_symbole get(char * nom);

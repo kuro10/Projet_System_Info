@@ -8,7 +8,7 @@ lex.yy.c: compiler.l
 	flex compiler.l
 
 test: compiler
-	./compiler < test2
+	./compiler < test
 
 clean:
 	rm lex.yy.c y.tab.c y.tab.h

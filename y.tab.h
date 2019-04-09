@@ -45,47 +45,76 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tEQU = 258,
-    tPLUS = 259,
-    tMOINS = 260,
-    tETOILE = 261,
-    tSLASH = 262,
-    tPO = 263,
-    tPF = 264,
-    tAO = 265,
-    tAF = 266,
-    tV = 267,
-    tPV = 268,
-    tINT = 269,
-    tCONST = 270,
-    tMAIN = 271,
-    tNB = 272,
-    tTEXT = 273,
-    tERROR = 274
+    tNB = 258,
+    tTEXT = 259,
+    tPO = 260,
+    tPF = 261,
+    tAO = 262,
+    tAF = 263,
+    tV = 264,
+    tPV = 265,
+    tINT = 266,
+    tCONST = 267,
+    tMAIN = 268,
+    tERROR = 269,
+    tWHILE = 270,
+    tEQU = 271,
+    tSUP = 272,
+    tINF = 273,
+    tSOE = 274,
+    tIOE = 275,
+    tRET = 276,
+    tAFFECT = 277,
+    tPLUS = 278,
+    tMOINS = 279,
+    tETOILE = 280,
+    tSLASH = 281,
+    tIF = 282,
+    tELSE = 283
   };
 #endif
 /* Tokens.  */
-#define tEQU 258
-#define tPLUS 259
-#define tMOINS 260
-#define tETOILE 261
-#define tSLASH 262
-#define tPO 263
-#define tPF 264
-#define tAO 265
-#define tAF 266
-#define tV 267
-#define tPV 268
-#define tINT 269
-#define tCONST 270
-#define tMAIN 271
-#define tNB 272
-#define tTEXT 273
-#define tERROR 274
+#define tNB 258
+#define tTEXT 259
+#define tPO 260
+#define tPF 261
+#define tAO 262
+#define tAF 263
+#define tV 264
+#define tPV 265
+#define tINT 266
+#define tCONST 267
+#define tMAIN 268
+#define tERROR 269
+#define tWHILE 270
+#define tEQU 271
+#define tSUP 272
+#define tINF 273
+#define tSOE 274
+#define tIOE 275
+#define tRET 276
+#define tAFFECT 277
+#define tPLUS 278
+#define tMOINS 279
+#define tETOILE 280
+#define tSLASH 281
+#define tIF 282
+#define tELSE 283
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 10 "compiler.y" /* yacc.c:1909  */
+
+	int nb;
+	char * str;
+
+#line 115 "y.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
