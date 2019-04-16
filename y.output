@@ -1,0 +1,1471 @@
+Terminaux inutilisés dans la grammaire
+
+   tCONST
+   tERROR
+
+
+Grammaire
+
+    0 $accept: Input $end
+
+    1 Input: BlocFcts BlocMain
+    2      | BlocMain
+    3      | BlocFcts
+
+    4 Body: Content Body
+    5     | %empty
+
+    6 Content: Declaration tPV
+    7        | Expr tPV
+    8        | BlocIf
+    9        | BlocWhile
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO Body Return AF
+
+   11 AO: tAO
+
+   12 AF: tAF
+
+   13 Args: Arg tV Args
+   14     | Arg
+
+   15 Arg: Type tTEXT
+   16    | Type Pointeur
+
+   17 BlocFcts: BlocFct
+   18         | BlocFcts BlocFct
+
+   19 BlocFct: Type Name tPO Parameters tPF AO Body Return AF
+
+   20 Return: tRET Expr tPV
+   21       | %empty
+
+   22 Expr: Expr tAFFECT Expr
+   23     | Expr tPLUS Expr
+   24     | Expr tMOINS Expr
+   25     | Expr tETOILE Expr
+   26     | Expr tSLASH Expr
+   27     | tPO Expr tPF
+   28     | tTEXT
+   29     | tNB
+   30     | AppelFunction
+
+   31 BlocIf: tIF tPO Cond tPF AO Body AF tELSE AO Body AF
+   32       | tIF tPO Cond tPF AO Body AF
+
+   33 BlocWhile: tWHILE tPO Cond tPF AO Body AF
+
+   34 Cond: Expr tEQU Expr
+   35     | Expr tSUP Expr
+   36     | Expr tINF Expr
+   37     | Expr tSOE Expr
+   38     | Expr tIOE Expr
+   39     | Expr
+   40     | %empty
+
+   41 Declaration: Type Names
+   42            | Type Name tAFFECT Expr
+
+   43 Type: tINT
+
+   44 Names: Name
+   45      | Name tV Names
+
+   46 Name: tTEXT
+
+   47 AppelFunction: F_Name tPO Parameters tPF
+
+   48 F_Name: tTEXT
+
+   49 Parameters: F_Args
+   50           | Args
+   51           | %empty
+
+   52 F_Args: F_Arg tV F_Args
+   53       | F_Arg
+
+   54 F_Arg: tNB
+   55      | tTEXT
+
+   56 Pointeur: Etoiles tTEXT
+
+   57 Etoiles: tETOILE
+   58        | tETOILE Etoiles
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+$end (0) 0
+error (256)
+tNB (258) 29 54
+tTEXT (259) 15 28 46 48 55 56
+tPO (260) 10 19 27 31 32 33 47
+tPF (261) 10 19 27 31 32 33 47
+tAO (262) 11
+tAF (263) 12
+tV (264) 13 45 52
+tPV (265) 6 7 20
+tINT (266) 10 43
+tCONST (267)
+tMAIN (268) 10
+tERROR (269)
+tWHILE (270) 33
+tEQU (271) 34
+tSUP (272) 35
+tINF (273) 36
+tSOE (274) 37
+tIOE (275) 38
+tRET (276) 20
+tAFFECT (277) 22 42
+tPLUS (278) 23
+tMOINS (279) 24
+tETOILE (280) 25 57 58
+tSLASH (281) 26
+tIF (282) 31 32
+tELSE (283) 31
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+$accept (29)
+    à gauche: 0
+Input (30)
+    à gauche: 1 2 3, à droite: 0
+Body (31)
+    à gauche: 4 5, à droite: 4 10 19 31 32 33
+Content (32)
+    à gauche: 6 7 8 9, à droite: 4
+BlocMain (33)
+    à gauche: 10, à droite: 1 2
+AO (34)
+    à gauche: 11, à droite: 10 19 31 32 33
+AF (35)
+    à gauche: 12, à droite: 10 19 31 32 33
+Args (36)
+    à gauche: 13 14, à droite: 13 50
+Arg (37)
+    à gauche: 15 16, à droite: 13 14
+BlocFcts (38)
+    à gauche: 17 18, à droite: 1 3 18
+BlocFct (39)
+    à gauche: 19, à droite: 17 18
+Return (40)
+    à gauche: 20 21, à droite: 10 19
+Expr (41)
+    à gauche: 22 23 24 25 26 27 28 29 30, à droite: 7 20 22 23 24
+    25 26 27 34 35 36 37 38 39 42
+BlocIf (42)
+    à gauche: 31 32, à droite: 8
+BlocWhile (43)
+    à gauche: 33, à droite: 9
+Cond (44)
+    à gauche: 34 35 36 37 38 39 40, à droite: 31 32 33
+Declaration (45)
+    à gauche: 41 42, à droite: 6
+Type (46)
+    à gauche: 43, à droite: 15 16 19 41 42
+Names (47)
+    à gauche: 44 45, à droite: 41 45
+Name (48)
+    à gauche: 46, à droite: 19 42 44 45
+AppelFunction (49)
+    à gauche: 47, à droite: 30
+F_Name (50)
+    à gauche: 48, à droite: 47
+Parameters (51)
+    à gauche: 49 50 51, à droite: 10 19 47
+F_Args (52)
+    à gauche: 52 53, à droite: 49 52
+F_Arg (53)
+    à gauche: 54 55, à droite: 52 53
+Pointeur (54)
+    à gauche: 56, à droite: 16
+Etoiles (55)
+    à gauche: 57 58, à droite: 56 58
+
+
+État 0
+
+    0 $accept: . Input $end
+
+    tINT  décalage et aller à l'état 1
+
+    Input     aller à l'état 2
+    BlocMain  aller à l'état 3
+    BlocFcts  aller à l'état 4
+    BlocFct   aller à l'état 5
+    Type      aller à l'état 6
+
+
+État 1
+
+   10 BlocMain: tINT . tMAIN tPO Parameters tPF AO Body Return AF
+   43 Type: tINT .
+
+    tMAIN  décalage et aller à l'état 7
+
+    $défaut  réduction par utilisation de la règle 43 (Type)
+
+
+État 2
+
+    0 $accept: Input . $end
+
+    $end  décalage et aller à l'état 8
+
+
+État 3
+
+    2 Input: BlocMain .
+
+    $défaut  réduction par utilisation de la règle 2 (Input)
+
+
+État 4
+
+    1 Input: BlocFcts . BlocMain
+    3      | BlocFcts .
+   18 BlocFcts: BlocFcts . BlocFct
+
+    tINT  décalage et aller à l'état 1
+
+    $défaut  réduction par utilisation de la règle 3 (Input)
+
+    BlocMain  aller à l'état 9
+    BlocFct   aller à l'état 10
+    Type      aller à l'état 6
+
+
+État 5
+
+   17 BlocFcts: BlocFct .
+
+    $défaut  réduction par utilisation de la règle 17 (BlocFcts)
+
+
+État 6
+
+   19 BlocFct: Type . Name tPO Parameters tPF AO Body Return AF
+
+    tTEXT  décalage et aller à l'état 11
+
+    Name  aller à l'état 12
+
+
+État 7
+
+   10 BlocMain: tINT tMAIN . tPO Parameters tPF AO Body Return AF
+
+    tPO  décalage et aller à l'état 13
+
+
+État 8
+
+    0 $accept: Input $end .
+
+    $défaut  accepter
+
+
+État 9
+
+    1 Input: BlocFcts BlocMain .
+
+    $défaut  réduction par utilisation de la règle 1 (Input)
+
+
+État 10
+
+   18 BlocFcts: BlocFcts BlocFct .
+
+    $défaut  réduction par utilisation de la règle 18 (BlocFcts)
+
+
+État 11
+
+   46 Name: tTEXT .
+
+    $défaut  réduction par utilisation de la règle 46 (Name)
+
+
+État 12
+
+   19 BlocFct: Type Name . tPO Parameters tPF AO Body Return AF
+
+    tPO  décalage et aller à l'état 14
+
+
+État 13
+
+   10 BlocMain: tINT tMAIN tPO . Parameters tPF AO Body Return AF
+
+    tNB    décalage et aller à l'état 15
+    tTEXT  décalage et aller à l'état 16
+    tINT   décalage et aller à l'état 17
+
+    $défaut  réduction par utilisation de la règle 51 (Parameters)
+
+    Args        aller à l'état 18
+    Arg         aller à l'état 19
+    Type        aller à l'état 20
+    Parameters  aller à l'état 21
+    F_Args      aller à l'état 22
+    F_Arg       aller à l'état 23
+
+
+État 14
+
+   19 BlocFct: Type Name tPO . Parameters tPF AO Body Return AF
+
+    tNB    décalage et aller à l'état 15
+    tTEXT  décalage et aller à l'état 16
+    tINT   décalage et aller à l'état 17
+
+    $défaut  réduction par utilisation de la règle 51 (Parameters)
+
+    Args        aller à l'état 18
+    Arg         aller à l'état 19
+    Type        aller à l'état 20
+    Parameters  aller à l'état 24
+    F_Args      aller à l'état 22
+    F_Arg       aller à l'état 23
+
+
+État 15
+
+   54 F_Arg: tNB .
+
+    $défaut  réduction par utilisation de la règle 54 (F_Arg)
+
+
+État 16
+
+   55 F_Arg: tTEXT .
+
+    $défaut  réduction par utilisation de la règle 55 (F_Arg)
+
+
+État 17
+
+   43 Type: tINT .
+
+    $défaut  réduction par utilisation de la règle 43 (Type)
+
+
+État 18
+
+   50 Parameters: Args .
+
+    $défaut  réduction par utilisation de la règle 50 (Parameters)
+
+
+État 19
+
+   13 Args: Arg . tV Args
+   14     | Arg .
+
+    tV  décalage et aller à l'état 25
+
+    $défaut  réduction par utilisation de la règle 14 (Args)
+
+
+État 20
+
+   15 Arg: Type . tTEXT
+   16    | Type . Pointeur
+
+    tTEXT    décalage et aller à l'état 26
+    tETOILE  décalage et aller à l'état 27
+
+    Pointeur  aller à l'état 28
+    Etoiles   aller à l'état 29
+
+
+État 21
+
+   10 BlocMain: tINT tMAIN tPO Parameters . tPF AO Body Return AF
+
+    tPF  décalage et aller à l'état 30
+
+
+État 22
+
+   49 Parameters: F_Args .
+
+    $défaut  réduction par utilisation de la règle 49 (Parameters)
+
+
+État 23
+
+   52 F_Args: F_Arg . tV F_Args
+   53       | F_Arg .
+
+    tV  décalage et aller à l'état 31
+
+    $défaut  réduction par utilisation de la règle 53 (F_Args)
+
+
+État 24
+
+   19 BlocFct: Type Name tPO Parameters . tPF AO Body Return AF
+
+    tPF  décalage et aller à l'état 32
+
+
+État 25
+
+   13 Args: Arg tV . Args
+
+    tINT  décalage et aller à l'état 17
+
+    Args  aller à l'état 33
+    Arg   aller à l'état 19
+    Type  aller à l'état 20
+
+
+État 26
+
+   15 Arg: Type tTEXT .
+
+    $défaut  réduction par utilisation de la règle 15 (Arg)
+
+
+État 27
+
+   57 Etoiles: tETOILE .
+   58        | tETOILE . Etoiles
+
+    tETOILE  décalage et aller à l'état 27
+
+    $défaut  réduction par utilisation de la règle 57 (Etoiles)
+
+    Etoiles  aller à l'état 34
+
+
+État 28
+
+   16 Arg: Type Pointeur .
+
+    $défaut  réduction par utilisation de la règle 16 (Arg)
+
+
+État 29
+
+   56 Pointeur: Etoiles . tTEXT
+
+    tTEXT  décalage et aller à l'état 35
+
+
+État 30
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF . AO Body Return AF
+
+    tAO  décalage et aller à l'état 36
+
+    AO  aller à l'état 37
+
+
+État 31
+
+   52 F_Args: F_Arg tV . F_Args
+
+    tNB    décalage et aller à l'état 15
+    tTEXT  décalage et aller à l'état 16
+
+    F_Args  aller à l'état 38
+    F_Arg   aller à l'état 23
+
+
+État 32
+
+   19 BlocFct: Type Name tPO Parameters tPF . AO Body Return AF
+
+    tAO  décalage et aller à l'état 36
+
+    AO  aller à l'état 39
+
+
+État 33
+
+   13 Args: Arg tV Args .
+
+    $défaut  réduction par utilisation de la règle 13 (Args)
+
+
+État 34
+
+   58 Etoiles: tETOILE Etoiles .
+
+    $défaut  réduction par utilisation de la règle 58 (Etoiles)
+
+
+État 35
+
+   56 Pointeur: Etoiles tTEXT .
+
+    $défaut  réduction par utilisation de la règle 56 (Pointeur)
+
+
+État 36
+
+   11 AO: tAO .
+
+    $défaut  réduction par utilisation de la règle 11 (AO)
+
+
+État 37
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO . Body Return AF
+
+    tNB     décalage et aller à l'état 40
+    tTEXT   décalage et aller à l'état 41
+    tPO     décalage et aller à l'état 42
+    tINT    décalage et aller à l'état 17
+    tWHILE  décalage et aller à l'état 43
+    tIF     décalage et aller à l'état 44
+
+    $défaut  réduction par utilisation de la règle 5 (Body)
+
+    Body           aller à l'état 45
+    Content        aller à l'état 46
+    Expr           aller à l'état 47
+    BlocIf         aller à l'état 48
+    BlocWhile      aller à l'état 49
+    Declaration    aller à l'état 50
+    Type           aller à l'état 51
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 38
+
+   52 F_Args: F_Arg tV F_Args .
+
+    $défaut  réduction par utilisation de la règle 52 (F_Args)
+
+
+État 39
+
+   19 BlocFct: Type Name tPO Parameters tPF AO . Body Return AF
+
+    tNB     décalage et aller à l'état 40
+    tTEXT   décalage et aller à l'état 41
+    tPO     décalage et aller à l'état 42
+    tINT    décalage et aller à l'état 17
+    tWHILE  décalage et aller à l'état 43
+    tIF     décalage et aller à l'état 44
+
+    $défaut  réduction par utilisation de la règle 5 (Body)
+
+    Body           aller à l'état 54
+    Content        aller à l'état 46
+    Expr           aller à l'état 47
+    BlocIf         aller à l'état 48
+    BlocWhile      aller à l'état 49
+    Declaration    aller à l'état 50
+    Type           aller à l'état 51
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 40
+
+   29 Expr: tNB .
+
+    $défaut  réduction par utilisation de la règle 29 (Expr)
+
+
+État 41
+
+   28 Expr: tTEXT .
+   48 F_Name: tTEXT .
+
+    tPO       réduction par utilisation de la règle 48 (F_Name)
+    $défaut  réduction par utilisation de la règle 28 (Expr)
+
+
+État 42
+
+   27 Expr: tPO . Expr tPF
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 55
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 43
+
+   33 BlocWhile: tWHILE . tPO Cond tPF AO Body AF
+
+    tPO  décalage et aller à l'état 56
+
+
+État 44
+
+   31 BlocIf: tIF . tPO Cond tPF AO Body AF tELSE AO Body AF
+   32       | tIF . tPO Cond tPF AO Body AF
+
+    tPO  décalage et aller à l'état 57
+
+
+État 45
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO Body . Return AF
+
+    tRET  décalage et aller à l'état 58
+
+    $défaut  réduction par utilisation de la règle 21 (Return)
+
+    Return  aller à l'état 59
+
+
+État 46
+
+    4 Body: Content . Body
+
+    tNB     décalage et aller à l'état 40
+    tTEXT   décalage et aller à l'état 41
+    tPO     décalage et aller à l'état 42
+    tINT    décalage et aller à l'état 17
+    tWHILE  décalage et aller à l'état 43
+    tIF     décalage et aller à l'état 44
+
+    $défaut  réduction par utilisation de la règle 5 (Body)
+
+    Body           aller à l'état 60
+    Content        aller à l'état 46
+    Expr           aller à l'état 47
+    BlocIf         aller à l'état 48
+    BlocWhile      aller à l'état 49
+    Declaration    aller à l'état 50
+    Type           aller à l'état 51
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 47
+
+    7 Content: Expr . tPV
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tPV      décalage et aller à l'état 61
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+
+État 48
+
+    8 Content: BlocIf .
+
+    $défaut  réduction par utilisation de la règle 8 (Content)
+
+
+État 49
+
+    9 Content: BlocWhile .
+
+    $défaut  réduction par utilisation de la règle 9 (Content)
+
+
+État 50
+
+    6 Content: Declaration . tPV
+
+    tPV  décalage et aller à l'état 67
+
+
+État 51
+
+   41 Declaration: Type . Names
+   42            | Type . Name tAFFECT Expr
+
+    tTEXT  décalage et aller à l'état 11
+
+    Names  aller à l'état 68
+    Name   aller à l'état 69
+
+
+État 52
+
+   30 Expr: AppelFunction .
+
+    $défaut  réduction par utilisation de la règle 30 (Expr)
+
+
+État 53
+
+   47 AppelFunction: F_Name . tPO Parameters tPF
+
+    tPO  décalage et aller à l'état 70
+
+
+État 54
+
+   19 BlocFct: Type Name tPO Parameters tPF AO Body . Return AF
+
+    tRET  décalage et aller à l'état 58
+
+    $défaut  réduction par utilisation de la règle 21 (Return)
+
+    Return  aller à l'état 71
+
+
+État 55
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   27     | tPO Expr . tPF
+
+    tPF      décalage et aller à l'état 72
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+
+État 56
+
+   33 BlocWhile: tWHILE tPO . Cond tPF AO Body AF
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    $défaut  réduction par utilisation de la règle 40 (Cond)
+
+    Expr           aller à l'état 73
+    Cond           aller à l'état 74
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 57
+
+   31 BlocIf: tIF tPO . Cond tPF AO Body AF tELSE AO Body AF
+   32       | tIF tPO . Cond tPF AO Body AF
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    $défaut  réduction par utilisation de la règle 40 (Cond)
+
+    Expr           aller à l'état 73
+    Cond           aller à l'état 75
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 58
+
+   20 Return: tRET . Expr tPV
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 76
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 59
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO Body Return . AF
+
+    tAF  décalage et aller à l'état 77
+
+    AF  aller à l'état 78
+
+
+État 60
+
+    4 Body: Content Body .
+
+    $défaut  réduction par utilisation de la règle 4 (Body)
+
+
+État 61
+
+    7 Content: Expr tPV .
+
+    $défaut  réduction par utilisation de la règle 7 (Content)
+
+
+État 62
+
+   22 Expr: Expr tAFFECT . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 79
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 63
+
+   23 Expr: Expr tPLUS . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 80
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 64
+
+   24 Expr: Expr tMOINS . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 81
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 65
+
+   25 Expr: Expr tETOILE . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 82
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 66
+
+   26 Expr: Expr tSLASH . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 83
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 67
+
+    6 Content: Declaration tPV .
+
+    $défaut  réduction par utilisation de la règle 6 (Content)
+
+
+État 68
+
+   41 Declaration: Type Names .
+
+    $défaut  réduction par utilisation de la règle 41 (Declaration)
+
+
+État 69
+
+   42 Declaration: Type Name . tAFFECT Expr
+   44 Names: Name .
+   45      | Name . tV Names
+
+    tV       décalage et aller à l'état 84
+    tAFFECT  décalage et aller à l'état 85
+
+    $défaut  réduction par utilisation de la règle 44 (Names)
+
+
+État 70
+
+   47 AppelFunction: F_Name tPO . Parameters tPF
+
+    tNB    décalage et aller à l'état 15
+    tTEXT  décalage et aller à l'état 16
+    tINT   décalage et aller à l'état 17
+
+    $défaut  réduction par utilisation de la règle 51 (Parameters)
+
+    Args        aller à l'état 18
+    Arg         aller à l'état 19
+    Type        aller à l'état 20
+    Parameters  aller à l'état 86
+    F_Args      aller à l'état 22
+    F_Arg       aller à l'état 23
+
+
+État 71
+
+   19 BlocFct: Type Name tPO Parameters tPF AO Body Return . AF
+
+    tAF  décalage et aller à l'état 77
+
+    AF  aller à l'état 87
+
+
+État 72
+
+   27 Expr: tPO Expr tPF .
+
+    $défaut  réduction par utilisation de la règle 27 (Expr)
+
+
+État 73
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   34 Cond: Expr . tEQU Expr
+   35     | Expr . tSUP Expr
+   36     | Expr . tINF Expr
+   37     | Expr . tSOE Expr
+   38     | Expr . tIOE Expr
+   39     | Expr .
+
+    tEQU     décalage et aller à l'état 88
+    tSUP     décalage et aller à l'état 89
+    tINF     décalage et aller à l'état 90
+    tSOE     décalage et aller à l'état 91
+    tIOE     décalage et aller à l'état 92
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 39 (Cond)
+
+
+État 74
+
+   33 BlocWhile: tWHILE tPO Cond . tPF AO Body AF
+
+    tPF  décalage et aller à l'état 93
+
+
+État 75
+
+   31 BlocIf: tIF tPO Cond . tPF AO Body AF tELSE AO Body AF
+   32       | tIF tPO Cond . tPF AO Body AF
+
+    tPF  décalage et aller à l'état 94
+
+
+État 76
+
+   20 Return: tRET Expr . tPV
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tPV      décalage et aller à l'état 95
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+
+État 77
+
+   12 AF: tAF .
+
+    $défaut  réduction par utilisation de la règle 12 (AF)
+
+
+État 78
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO Body Return AF .
+
+    $défaut  réduction par utilisation de la règle 10 (BlocMain)
+
+
+État 79
+
+   22 Expr: Expr . tAFFECT Expr
+   22     | Expr tAFFECT Expr .
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 22 (Expr)
+
+
+État 80
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   23     | Expr tPLUS Expr .
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 23 (Expr)
+
+
+État 81
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   24     | Expr tMOINS Expr .
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 24 (Expr)
+
+
+État 82
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   25     | Expr tETOILE Expr .
+   26     | Expr . tSLASH Expr
+
+    $défaut  réduction par utilisation de la règle 25 (Expr)
+
+
+État 83
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   26     | Expr tSLASH Expr .
+
+    $défaut  réduction par utilisation de la règle 26 (Expr)
+
+
+État 84
+
+   45 Names: Name tV . Names
+
+    tTEXT  décalage et aller à l'état 11
+
+    Names  aller à l'état 96
+    Name   aller à l'état 97
+
+
+État 85
+
+   42 Declaration: Type Name tAFFECT . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 98
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 86
+
+   47 AppelFunction: F_Name tPO Parameters . tPF
+
+    tPF  décalage et aller à l'état 99
+
+
+État 87
+
+   19 BlocFct: Type Name tPO Parameters tPF AO Body Return AF .
+
+    $défaut  réduction par utilisation de la règle 19 (BlocFct)
+
+
+État 88
+
+   34 Cond: Expr tEQU . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 100
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 89
+
+   35 Cond: Expr tSUP . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 101
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 90
+
+   36 Cond: Expr tINF . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 102
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 91
+
+   37 Cond: Expr tSOE . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 103
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 92
+
+   38 Cond: Expr tIOE . Expr
+
+    tNB    décalage et aller à l'état 40
+    tTEXT  décalage et aller à l'état 41
+    tPO    décalage et aller à l'état 42
+
+    Expr           aller à l'état 104
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 93
+
+   33 BlocWhile: tWHILE tPO Cond tPF . AO Body AF
+
+    tAO  décalage et aller à l'état 36
+
+    AO  aller à l'état 105
+
+
+État 94
+
+   31 BlocIf: tIF tPO Cond tPF . AO Body AF tELSE AO Body AF
+   32       | tIF tPO Cond tPF . AO Body AF
+
+    tAO  décalage et aller à l'état 36
+
+    AO  aller à l'état 106
+
+
+État 95
+
+   20 Return: tRET Expr tPV .
+
+    $défaut  réduction par utilisation de la règle 20 (Return)
+
+
+État 96
+
+   45 Names: Name tV Names .
+
+    $défaut  réduction par utilisation de la règle 45 (Names)
+
+
+État 97
+
+   44 Names: Name .
+   45      | Name . tV Names
+
+    tV  décalage et aller à l'état 84
+
+    $défaut  réduction par utilisation de la règle 44 (Names)
+
+
+État 98
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   42 Declaration: Type Name tAFFECT Expr .
+
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 42 (Declaration)
+
+
+État 99
+
+   47 AppelFunction: F_Name tPO Parameters tPF .
+
+    $défaut  réduction par utilisation de la règle 47 (AppelFunction)
+
+
+État 100
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   34 Cond: Expr tEQU Expr .
+
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 34 (Cond)
+
+
+État 101
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   35 Cond: Expr tSUP Expr .
+
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 35 (Cond)
+
+
+État 102
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   36 Cond: Expr tINF Expr .
+
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 36 (Cond)
+
+
+État 103
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   37 Cond: Expr tSOE Expr .
+
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 37 (Cond)
+
+
+État 104
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   38 Cond: Expr tIOE Expr .
+
+    tAFFECT  décalage et aller à l'état 62
+    tPLUS    décalage et aller à l'état 63
+    tMOINS   décalage et aller à l'état 64
+    tETOILE  décalage et aller à l'état 65
+    tSLASH   décalage et aller à l'état 66
+
+    $défaut  réduction par utilisation de la règle 38 (Cond)
+
+
+État 105
+
+   33 BlocWhile: tWHILE tPO Cond tPF AO . Body AF
+
+    tNB     décalage et aller à l'état 40
+    tTEXT   décalage et aller à l'état 41
+    tPO     décalage et aller à l'état 42
+    tINT    décalage et aller à l'état 17
+    tWHILE  décalage et aller à l'état 43
+    tIF     décalage et aller à l'état 44
+
+    $défaut  réduction par utilisation de la règle 5 (Body)
+
+    Body           aller à l'état 107
+    Content        aller à l'état 46
+    Expr           aller à l'état 47
+    BlocIf         aller à l'état 48
+    BlocWhile      aller à l'état 49
+    Declaration    aller à l'état 50
+    Type           aller à l'état 51
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 106
+
+   31 BlocIf: tIF tPO Cond tPF AO . Body AF tELSE AO Body AF
+   32       | tIF tPO Cond tPF AO . Body AF
+
+    tNB     décalage et aller à l'état 40
+    tTEXT   décalage et aller à l'état 41
+    tPO     décalage et aller à l'état 42
+    tINT    décalage et aller à l'état 17
+    tWHILE  décalage et aller à l'état 43
+    tIF     décalage et aller à l'état 44
+
+    $défaut  réduction par utilisation de la règle 5 (Body)
+
+    Body           aller à l'état 108
+    Content        aller à l'état 46
+    Expr           aller à l'état 47
+    BlocIf         aller à l'état 48
+    BlocWhile      aller à l'état 49
+    Declaration    aller à l'état 50
+    Type           aller à l'état 51
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 107
+
+   33 BlocWhile: tWHILE tPO Cond tPF AO Body . AF
+
+    tAF  décalage et aller à l'état 77
+
+    AF  aller à l'état 109
+
+
+État 108
+
+   31 BlocIf: tIF tPO Cond tPF AO Body . AF tELSE AO Body AF
+   32       | tIF tPO Cond tPF AO Body . AF
+
+    tAF  décalage et aller à l'état 77
+
+    AF  aller à l'état 110
+
+
+État 109
+
+   33 BlocWhile: tWHILE tPO Cond tPF AO Body AF .
+
+    $défaut  réduction par utilisation de la règle 33 (BlocWhile)
+
+
+État 110
+
+   31 BlocIf: tIF tPO Cond tPF AO Body AF . tELSE AO Body AF
+   32       | tIF tPO Cond tPF AO Body AF .
+
+    tELSE  décalage et aller à l'état 111
+
+    $défaut  réduction par utilisation de la règle 32 (BlocIf)
+
+
+État 111
+
+   31 BlocIf: tIF tPO Cond tPF AO Body AF tELSE . AO Body AF
+
+    tAO  décalage et aller à l'état 36
+
+    AO  aller à l'état 112
+
+
+État 112
+
+   31 BlocIf: tIF tPO Cond tPF AO Body AF tELSE AO . Body AF
+
+    tNB     décalage et aller à l'état 40
+    tTEXT   décalage et aller à l'état 41
+    tPO     décalage et aller à l'état 42
+    tINT    décalage et aller à l'état 17
+    tWHILE  décalage et aller à l'état 43
+    tIF     décalage et aller à l'état 44
+
+    $défaut  réduction par utilisation de la règle 5 (Body)
+
+    Body           aller à l'état 113
+    Content        aller à l'état 46
+    Expr           aller à l'état 47
+    BlocIf         aller à l'état 48
+    BlocWhile      aller à l'état 49
+    Declaration    aller à l'état 50
+    Type           aller à l'état 51
+    AppelFunction  aller à l'état 52
+    F_Name         aller à l'état 53
+
+
+État 113
+
+   31 BlocIf: tIF tPO Cond tPF AO Body AF tELSE AO Body . AF
+
+    tAF  décalage et aller à l'état 77
+
+    AF  aller à l'état 114
+
+
+État 114
+
+   31 BlocIf: tIF tPO Cond tPF AO Body AF tELSE AO Body AF .
+
+    $défaut  réduction par utilisation de la règle 31 (BlocIf)

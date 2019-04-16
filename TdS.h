@@ -1,3 +1,5 @@
+#ifndef TDS_H
+#define TDS_H
 
 /*Structure*/
 
@@ -27,5 +29,8 @@ void incr_profondeur(void);
 void decr_profondeur(void);
 void push(char * type, char * nom);
 void afficher_table(void);
-void ecrire(char * contenu);
+int get_adr(char * nom);
+void maj_ligne(char * nom);
 //Type_symbole get(char * nom);
+
+#endif

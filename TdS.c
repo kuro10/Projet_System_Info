@@ -63,6 +63,34 @@ void afficher_table(void) {
 	}
 	printf("\n");
 }
+
+int get_adr(char * nom) {
+	int i = 0;
+	int found = 0;
+	int adr;
+	while (i < ligne && found == 0) {
+		if (strcmp(tab_sym[i].nom,nom) == 0 && tab_sym[i].profondeur == profondeur) {
+			found = 1;
+			adr = tab_sym[i].adr;
+		}
+		i++;
+	}
+	return adr;
+}
+
+void maj_ligne(char * nom) {
+	int i = 0;
+	int found = 0;
+	int adr;
+	while (i < ligne && found == 0) {
+		if (strcmp(tab_sym[i].nom,nom) == 0 && tab_sym[i].profondeur == profondeur) {
+			found = 1;
+		}
+		i++;
+	}
+	ligne = i;
+	printf("%d\n", ligne);
+}
 /*int main() {
 	push("Hieu", 20, 626);
 

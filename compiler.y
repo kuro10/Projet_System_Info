@@ -1,10 +1,14 @@
 
 %{
 #include <stdio.h>
+#include <string.h>
 #include "TdS.h"	
+#include "interpreteur.h"	
 int yylex();
 void yyerror(char * );
-char * type; 
+char * type;
+char * var_name;
+int tmp = 0; 
 %}
 
 %union{
@@ -39,7 +43,6 @@ Content :	Declaration tPV
 		|	Expr tPV
 		|	BlocIf
 		|	BlocWhile
-		|	AppelFunction tPV
 		;
 
 /* Main Bloc*/
@@ -62,12 +65,49 @@ Return 	: 	tRET Expr tPV |
 /*Expression arithmetique*/
 Expr 	:	Expr tAFFECT Expr 	
 		|	Expr tPLUS Expr 
+			{ 
+				 
+			  tmp--;
+			  char name[4] = "tmp";
+			  char tmp_num[5];
+			  snprintf(tmp_num, 5, "%d", tmp);
+			  strcat(name, tmp_num);
+			  ajout_ligneinter("LOAD", 0, get_adr(name), -1);
+			  interpreter();
+
+		      tmp--;
+			  char name2[4] = "tmp";
+			  char tmp_num2[5];
+			  snprintf(tmp_num2, 5, "%d", tmp);
+			  strcat(name2, tmp_num2);
+			
+			  ajout_ligneinter("LOAD", 1, get_adr(name2), -1);
+		
+			  interpreter();
+ printf("AAAAAAAAA\n");
+			  ajout_ligneinter("ADD", 0, 0, 1);
+			  interpreter();
+			}
 		|	Expr tMOINS Expr
 		|	Expr tETOILE Expr
 		|	Expr tSLASH Expr
 		|	tPO Expr tPF
 		| 	tTEXT
-		| 	tNB 
+		| 	tNB 				
+			{ 
+
+			  char name[4] = "tmp";
+			  char tmp_num[5];
+			  snprintf(tmp_num, 5, "%d", tmp);
+			  strcat(name, tmp_num);
+			  tmp++;
+
+			  push(type, name);
+			  ajout_ligneinter("AFC", 0, $1, -1);
+			  ajout_ligneinter("STORE", get_adr(name), 0, -1);
+			  interpreter();
+			}
+		|	AppelFunction 
 		;
 
 /*Expression conditionnelle*/
@@ -92,14 +132,18 @@ Cond	: 	Expr tEQU Expr
 
 /*Declaration*/
 
-Declaration : Type Names 
-	 		| Type Name tAFFECT AppelFunction 
-	 		| Type Name tAFFECT Expr 					
+Declaration : Type Names
+	 		| Type Name tAFFECT Expr 				
+				{
+				  ajout_ligneinter("STORE", get_adr(var_name), 0, -1);
+				  interpreter();
+				  maj_ligne(var_name);
+				}	
 			;
 
 Type 	: 	tINT { type = "int"; } ;
 Names 	: 	Name | Name tV Names ;
-Name 	: 	tTEXT  { push(type, $1); } 	
+Name 	: 	tTEXT  { var_name = $1; push(type, $1); } 	
 			;
 /*Appel des Fcts*/
 AppelFunction: 	F_Name tPO Parameters tPF

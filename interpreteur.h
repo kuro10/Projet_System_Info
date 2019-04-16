@@ -1,3 +1,6 @@
+#ifndef INTERPRETEUR_H
+#define INTERPRETEUR_H
+
 typedef struct ligneinter{
 	char op[10];
 	int rA;
@@ -9,5 +12,5 @@ void ajout_ligneinter (char * op, int rA, int rB, int rC);
 void afficher_tabinter();
 void interpreter();
 
-
+#endif
 
