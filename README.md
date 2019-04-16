@@ -2,4 +2,5 @@
 
 
 'make' 
+
 './compile < input_test'
