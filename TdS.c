@@ -91,6 +91,18 @@ void maj_ligne(char * nom) {
 	ligne = i;
 	printf("%d\n", ligne);
 }
+
+int get_lastline_adr() {
+	int adr;
+	adr = tab_sym[ligne-1].adr;
+	printf("Adresse prise : @%d\n", adr);
+	printf("Ligne actuelle : %d\n", ligne);
+	if (ligne > 0) 
+		ligne--;
+	printf("Ligne actuelle apres popped : %d\n", ligne);
+
+	return adr;
+}
 /*int main() {
 	push("Hieu", 20, 626);
 

@@ -31,6 +31,7 @@ void push(char * type, char * nom);
 void afficher_table(void);
 int get_adr(char * nom);
 void maj_ligne(char * nom);
+int get_lastline_adr();
 //Type_symbole get(char * nom);
 
 #endif

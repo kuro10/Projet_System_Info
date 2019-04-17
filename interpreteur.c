@@ -51,10 +51,10 @@ void interpreter() {
 			printf("r%d est affecte' a` %d\n", rA, rB);
 		} else if (!strcmp(op, "STORE")) {
 			memoire[rA] = registre[rB];
-			printf("r%d contient maintenant %d\n", rB, memoire[rA]);
+			printf("r%d contient maintenant %d dans l'adresse @%d\n", rB, memoire[rA], rA);
 		} else if (!strcmp(op, "LOAD")) {
 			registre[rA] = memoire[rB];
-			printf("r%d est charge' de %d\n", rA, memoire[rB]);
+			printf("r%d est charge' de %d depuis l'adresse @%d\n", rA, memoire[rB], rB);
 		}
 		exc++;
 	}

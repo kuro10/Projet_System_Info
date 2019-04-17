@@ -66,25 +66,16 @@ Return 	: 	tRET Expr tPV |
 Expr 	:	Expr tAFFECT Expr 	
 		|	Expr tPLUS Expr 
 			{ 
-				 
+			  ajout_ligneinter("LOAD", 0, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
 			  tmp--;
-			  char name[4] = "tmp";
-			  char tmp_num[5];
-			  snprintf(tmp_num, 5, "%d", tmp);
-			  strcat(name, tmp_num);
-			  ajout_ligneinter("LOAD", 0, get_adr(name), -1);
 			  interpreter();
-
-		      tmp--;
-			  char name2[4] = "tmp";
-			  char tmp_num2[5];
-			  snprintf(tmp_num2, 5, "%d", tmp);
-			  strcat(name2, tmp_num2);
 			
-			  ajout_ligneinter("LOAD", 1, get_adr(name2), -1);
-		
+			  ajout_ligneinter("LOAD", 1, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
 			  interpreter();
- printf("AAAAAAAAA\n");
+			  
 			  ajout_ligneinter("ADD", 0, 0, 1);
 			  interpreter();
 			}
@@ -95,7 +86,7 @@ Expr 	:	Expr tAFFECT Expr
 		| 	tTEXT
 		| 	tNB 				
 			{ 
-
+			  printf("tmp = %d\n", tmp);
 			  char name[4] = "tmp";
 			  char tmp_num[5];
 			  snprintf(tmp_num, 5, "%d", tmp);
@@ -137,7 +128,6 @@ Declaration : Type Names
 				{
 				  ajout_ligneinter("STORE", get_adr(var_name), 0, -1);
 				  interpreter();
-				  maj_ligne(var_name);
 				}	
 			;
 
