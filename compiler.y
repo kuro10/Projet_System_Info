@@ -8,7 +8,8 @@ int yylex();
 void yyerror(char * );
 char * type;
 char * var_name;
-int tmp = 0; 
+int tmp = 0;
+int used = 0; 
 %}
 
 %union{
@@ -66,17 +67,18 @@ Return 	: 	tRET Expr tPV |
 Expr 	:	Expr tAFFECT Expr 	
 		|	Expr tPLUS Expr 
 			{ 
-			  ajout_ligneinter("LOAD", 0, get_lastline_adr(), -1);
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
 			  printf("tmp = %d\n", tmp);
 			  tmp--;
 			  interpreter();
 			
-			  ajout_ligneinter("LOAD", 1, get_lastline_adr(), -1);
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
 			  printf("tmp = %d\n", tmp);
 			  tmp--;
 			  interpreter();
 			  
-			  ajout_ligneinter("ADD", 0, 0, 1);
+			  ajout_ligneinter("ADD", used-1, used-1, used);
 			  interpreter();
 			}
 		|	Expr tMOINS Expr
@@ -94,8 +96,8 @@ Expr 	:	Expr tAFFECT Expr
 			  tmp++;
 
 			  push(type, name);
-			  ajout_ligneinter("AFC", 0, $1, -1);
-			  ajout_ligneinter("STORE", get_adr(name), 0, -1);
+			  ajout_ligneinter("AFC", used, $1, -1);
+			  ajout_ligneinter("STORE", get_adr(name), used, -1);
 			  interpreter();
 			}
 		|	AppelFunction 
@@ -126,7 +128,8 @@ Cond	: 	Expr tEQU Expr
 Declaration : Type Names
 	 		| Type Name tAFFECT Expr 				
 				{
-				  ajout_ligneinter("STORE", get_adr(var_name), 0, -1);
+				  used--;
+				  ajout_ligneinter("STORE", get_adr(var_name), used, -1);
 				  interpreter();
 				}	
 			;
@@ -136,10 +139,10 @@ Names 	: 	Name | Name tV Names ;
 Name 	: 	tTEXT  { var_name = $1; push(type, $1); } 	
 			;
 /*Appel des Fcts*/
-AppelFunction: 	F_Name tPO Parameters tPF
-F_Name  :   tTEXT	 
-Parameters:	F_Args | Args |  
-F_Args 	: 	F_Arg tV F_Args | F_Arg
+AppelFunction: 	F_Name tPO Parameters tPF;
+F_Name  :   tTEXT	 ;
+Parameters:	F_Args | Args |  ;
+F_Args 	: 	F_Arg tV F_Args | F_Arg;
 F_Arg 	: 	tNB | tTEXT;
 
 

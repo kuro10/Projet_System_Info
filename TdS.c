@@ -97,13 +97,14 @@ int get_lastline_adr() {
 	adr = tab_sym[ligne-1].adr;
 	printf("Adresse prise : @%d\n", adr);
 	printf("Ligne actuelle : %d\n", ligne);
-	if (ligne > 0) 
+	if (ligne > 1) 
 		ligne--;
 	printf("Ligne actuelle apres popped : %d\n", ligne);
 
 	return adr;
 }
 /*int main() {
+	push("Hieu", 20, 626);
 
 	afficher_table();
 }*/

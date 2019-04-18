@@ -55,7 +55,37 @@ void interpreter() {
 		} else if (!strcmp(op, "LOAD")) {
 			registre[rA] = memoire[rB];
 			printf("r%d est charge' de %d depuis l'adresse @%d\n", rA, memoire[rB], rB);
-		}
+		} else if (!strcmp(op, "EQU")) {
+			if (registre[rB] == registre[rC]) {
+				registre[rA] = 1;
+			} else {
+				registre[rA] = 0;
+			}
+		} else if (!strcmp(op, "INF")) {
+			if (registre[rB] < registre[rC]) {
+				registre[rA] = 1;
+			} else {
+				registre[rA] = 0;
+			}
+		} else if (!strcmp(op, "INFE")) {
+			if (registre[rB] <= registre[rC]) {
+				registre[rA] = 1;
+			} else {
+				registre[rA] = 0;
+			}
+		} else if (!strcmp(op, "SUP")) {
+			if (registre[rB] > registre[rC]) {
+				registre[rA] = 1;
+			} else {
+				registre[rA] = 0;
+			}
+		} else if (!strcmp(op, "SUPE")) {
+			if (registre[rB] >= registre[rC]) {
+				registre[rA] = 1;
+			} else {
+				registre[rA] = 0;
+			}
+		}		
 		exc++;
 	}
 }

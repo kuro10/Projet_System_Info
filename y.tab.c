@@ -72,9 +72,10 @@ int yylex();
 void yyerror(char * );
 char * type;
 char * var_name;
-int tmp = 0; 
+int tmp = 0;
+int used = 0; 
 
-#line 78 "y.tab.c" /* yacc.c:339  */
+#line 79 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -170,12 +171,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "compiler.y" /* yacc.c:355  */
+#line 15 "compiler.y" /* yacc.c:355  */
 
 	int nb;
 	char * str;
 
-#line 179 "y.tab.c" /* yacc.c:355  */
+#line 180 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -192,7 +193,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 196 "y.tab.c" /* yacc.c:358  */
+#line 197 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -492,12 +493,12 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    33,    33,    34,    35,    38,    39,    42,    43,    44,
-      45,    50,    51,    52,    53,    53,    54,    54,    58,    58,
-      60,    62,    62,    66,    67,    82,    83,    84,    85,    86,
-      87,   101,   107,   108,   112,   115,   116,   117,   118,   119,
-     120,   121,   126,   127,   134,   135,   135,   136,   139,   140,
-     141,   141,   141,   142,   142,   143,   143,   147,   148,   148
+       0,    34,    34,    35,    36,    39,    40,    43,    44,    45,
+      46,    51,    52,    53,    54,    54,    55,    55,    59,    59,
+      61,    63,    63,    67,    68,    84,    85,    86,    87,    88,
+      89,   103,   109,   110,   114,   117,   118,   119,   120,   121,
+     122,   123,   128,   129,   137,   138,   138,   139,   142,   143,
+     144,   144,   144,   145,   145,   146,   146,   150,   151,   151
 };
 #endif
 
@@ -1342,56 +1343,57 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 33 "compiler.y" /* yacc.c:1646  */
+#line 34 "compiler.y" /* yacc.c:1646  */
     {printf("message Fct+Main \n");}
-#line 1348 "y.tab.c" /* yacc.c:1646  */
+#line 1349 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 34 "compiler.y" /* yacc.c:1646  */
+#line 35 "compiler.y" /* yacc.c:1646  */
     {printf("message Main \n");}
-#line 1354 "y.tab.c" /* yacc.c:1646  */
+#line 1355 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 35 "compiler.y" /* yacc.c:1646  */
+#line 36 "compiler.y" /* yacc.c:1646  */
     {printf("message Fcts \n");}
-#line 1360 "y.tab.c" /* yacc.c:1646  */
+#line 1361 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 51 "compiler.y" /* yacc.c:1646  */
+#line 52 "compiler.y" /* yacc.c:1646  */
     { incr_profondeur(); }
-#line 1366 "y.tab.c" /* yacc.c:1646  */
+#line 1367 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 52 "compiler.y" /* yacc.c:1646  */
+#line 53 "compiler.y" /* yacc.c:1646  */
     { decr_profondeur(); }
-#line 1372 "y.tab.c" /* yacc.c:1646  */
+#line 1373 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 68 "compiler.y" /* yacc.c:1646  */
+#line 69 "compiler.y" /* yacc.c:1646  */
     { 
-			  ajout_ligneinter("LOAD", 0, get_lastline_adr(), -1);
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
 			  printf("tmp = %d\n", tmp);
 			  tmp--;
 			  interpreter();
 			
-			  ajout_ligneinter("LOAD", 1, get_lastline_adr(), -1);
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
 			  printf("tmp = %d\n", tmp);
 			  tmp--;
 			  interpreter();
 			  
-			  ajout_ligneinter("ADD", 0, 0, 1);
+			  ajout_ligneinter("ADD", used-1, used-1, used);
 			  interpreter();
 			}
-#line 1391 "y.tab.c" /* yacc.c:1646  */
+#line 1393 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 88 "compiler.y" /* yacc.c:1646  */
+#line 90 "compiler.y" /* yacc.c:1646  */
     { 
 			  printf("tmp = %d\n", tmp);
 			  char name[4] = "tmp";
@@ -1401,36 +1403,37 @@ yyreduce:
 			  tmp++;
 
 			  push(type, name);
-			  ajout_ligneinter("AFC", 0, (yyvsp[0].nb), -1);
-			  ajout_ligneinter("STORE", get_adr(name), 0, -1);
+			  ajout_ligneinter("AFC", used, (yyvsp[0].nb), -1);
+			  ajout_ligneinter("STORE", get_adr(name), used, -1);
 			  interpreter();
 			}
-#line 1409 "y.tab.c" /* yacc.c:1646  */
+#line 1411 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 128 "compiler.y" /* yacc.c:1646  */
+#line 130 "compiler.y" /* yacc.c:1646  */
     {
-				  ajout_ligneinter("STORE", get_adr(var_name), 0, -1);
+				  used--;
+				  ajout_ligneinter("STORE", get_adr(var_name), used, -1);
 				  interpreter();
 				}
-#line 1418 "y.tab.c" /* yacc.c:1646  */
+#line 1421 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 134 "compiler.y" /* yacc.c:1646  */
+#line 137 "compiler.y" /* yacc.c:1646  */
     { type = "int"; }
-#line 1424 "y.tab.c" /* yacc.c:1646  */
+#line 1427 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 136 "compiler.y" /* yacc.c:1646  */
+#line 139 "compiler.y" /* yacc.c:1646  */
     { var_name = (yyvsp[0].str); push(type, (yyvsp[0].str)); }
-#line 1430 "y.tab.c" /* yacc.c:1646  */
+#line 1433 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1434 "y.tab.c" /* yacc.c:1646  */
+#line 1437 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1658,7 +1661,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 152 "compiler.y" /* yacc.c:1906  */
+#line 155 "compiler.y" /* yacc.c:1906  */
  
 void yyerror(char *s)
 {
