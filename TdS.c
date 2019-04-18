@@ -104,7 +104,6 @@ int get_lastline_adr() {
 	return adr;
 }
 /*int main() {
-	push("Hieu", 20, 626);
 
 	afficher_table();
 }*/

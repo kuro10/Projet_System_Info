@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/home/th_tran/4IR Projet SysInfo/Projet_System_Info/PartieVHDL/TestALU_isim_beh.exe" -prj "/home/th_tran/4IR Projet SysInfo/Projet_System_Info/PartieVHDL/TestALU_beh.prj" "work.TestALU" 
