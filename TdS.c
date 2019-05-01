@@ -53,6 +53,12 @@ void push(char * type, char * nom) {
 	afficher_table();
 }
 
+void pop() {
+	if (ligne>0) {
+		ligne--;
+	}
+}
+
 void afficher_sym(Type_symbole s) {
 	printf("Type : %s | Nom: %s | Profondeur : %d | Adr : %d\n", s.type, s.nom, s.profondeur, s.adr);
 }
@@ -97,8 +103,7 @@ int get_lastline_adr() {
 	adr = tab_sym[ligne-1].adr;
 	printf("Adresse prise : @%d\n", adr);
 	printf("Ligne actuelle : %d\n", ligne);
-	if (ligne > 1) 
-		ligne--;
+	ligne--;
 	printf("Ligne actuelle apres popped : %d\n", ligne);
 
 	return adr;

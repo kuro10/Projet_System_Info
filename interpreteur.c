@@ -38,14 +38,14 @@ void interpreter() {
 		int rB = tab_inter[exc].rB;
 		int rC = tab_inter[exc].rC;
 		if (!strcmp(op, "ADD")) {
-			registre[rA] = registre[rB] + registre[rC];
+			registre[rA] = registre[rC] + registre[rB];
 			printf("Somme de r%d et r%d est %d\n", rB, rC, registre[rA]);
 		} else if (!strcmp(op, "SUB")) {
-			registre[rA] = registre[rB] - registre[rC];
+			registre[rA] = registre[rC] - registre[rB];
 		} else if (!strcmp(op, "MUL")) {
-			registre[rA] = registre[rB] * registre[rC];
+			registre[rA] = registre[rC] * registre[rB];
 		} else if (!strcmp(op, "DIV")) {
-			registre[rA] = registre[rB] / registre[rC];
+			registre[rA] = registre[rC] / registre[rB];
 		} else if (!strcmp(op, "AFC")) {
 			registre[rA] = rB;
 			printf("r%d est affecte' a` %d\n", rA, rB);

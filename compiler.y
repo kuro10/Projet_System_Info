@@ -79,11 +79,92 @@ Expr 	:	Expr tAFFECT Expr
 			  interpreter();
 			  
 			  ajout_ligneinter("ADD", used-1, used-1, used);
+			  used--;
+			  
+			  char name[4] = "tmp";
+			  char tmp_num[5];
+			  snprintf(tmp_num, 5, "%d", tmp);
+			  strcat(name, tmp_num);
+			  tmp++;
+			  push(type, name);
+			  ajout_ligneinter("STORE", get_adr(name), used, -1); 
 			  interpreter();
 			}
 		|	Expr tMOINS Expr
+			{ 
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			  
+			  ajout_ligneinter("SUB", used-1, used-1, used);
+			  used--;
+			  
+			  char name[4] = "tmp";
+			  char tmp_num[5];
+			  snprintf(tmp_num, 5, "%d", tmp);
+			  strcat(name, tmp_num);
+			  tmp++;
+			  push(type, name);
+			  ajout_ligneinter("STORE", get_adr(name), used, -1); 
+			  interpreter();
+			}
 		|	Expr tETOILE Expr
+			{ 
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			  
+			  ajout_ligneinter("MUL", used-1, used-1, used);
+			  used--;
+			  
+			  char name[4] = "tmp";
+			  char tmp_num[5];
+			  snprintf(tmp_num, 5, "%d", tmp);
+			  strcat(name, tmp_num);
+			  tmp++;
+			  push(type, name);
+			  ajout_ligneinter("STORE", get_adr(name), used, -1); 
+			  interpreter();
+			}
 		|	Expr tSLASH Expr
+			{ 
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			  
+			  ajout_ligneinter("DIV", used-1, used-1, used);
+			  used--;
+			  
+			  char name[4] = "tmp";
+			  char tmp_num[5];
+			  snprintf(tmp_num, 5, "%d", tmp);
+			  strcat(name, tmp_num);
+			  tmp++;
+			  push(type, name);
+			  ajout_ligneinter("STORE", get_adr(name), used, -1); 
+			  interpreter();
+			}
 		|	tPO Expr tPF
 		| 	tTEXT
 		| 	tNB 				
@@ -128,15 +209,14 @@ Cond	: 	Expr tEQU Expr
 Declaration : Type Names
 	 		| Type Name tAFFECT Expr 				
 				{
-				  used--;
-				  ajout_ligneinter("STORE", get_adr(var_name), used, -1);
-				  interpreter();
+				  pop();
+				  push(type, var_name);
 				}	
 			;
 
 Type 	: 	tINT { type = "int"; } ;
 Names 	: 	Name | Name tV Names ;
-Name 	: 	tTEXT  { var_name = $1; push(type, $1); } 	
+Name 	: 	tTEXT  { var_name = $1; } 	
 			;
 /*Appel des Fcts*/
 AppelFunction: 	F_Name tPO Parameters tPF;

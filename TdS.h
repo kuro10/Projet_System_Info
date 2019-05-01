@@ -28,6 +28,7 @@ void affiche_table(void);*/
 void incr_profondeur(void);
 void decr_profondeur(void);
 void push(char * type, char * nom);
+void pop();
 void afficher_table(void);
 int get_adr(char * nom);
 void maj_ligne(char * nom);
