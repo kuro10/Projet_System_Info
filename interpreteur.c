@@ -30,6 +30,14 @@ void afficher_tabinter() {
 	printf("\n");
 }
 
+int current_index() {
+	return ligne_i;
+}
+
+int from_registre(int r) {
+	return registre[r];
+}
+
 void interpreter() {
 	while(exc < ligne_i){
 		char op[5];
@@ -56,36 +64,38 @@ void interpreter() {
 			registre[rA] = memoire[rB];
 			printf("r%d est charge' de %d depuis l'adresse @%d\n", rA, memoire[rB], rB);
 		} else if (!strcmp(op, "EQU")) {
-			if (registre[rB] == registre[rC]) {
+			if (registre[rC] == registre[rB]) {
 				registre[rA] = 1;
 			} else {
 				registre[rA] = 0;
 			}
 		} else if (!strcmp(op, "INF")) {
-			if (registre[rB] < registre[rC]) {
+			if (registre[rC] < registre[rB]) {
 				registre[rA] = 1;
 			} else {
 				registre[rA] = 0;
 			}
 		} else if (!strcmp(op, "INFE")) {
-			if (registre[rB] <= registre[rC]) {
+			if (registre[rC] <= registre[rB]) {
 				registre[rA] = 1;
 			} else {
 				registre[rA] = 0;
 			}
 		} else if (!strcmp(op, "SUP")) {
-			if (registre[rB] > registre[rC]) {
+			if (registre[rC] > registre[rB]) {
 				registre[rA] = 1;
 			} else {
 				registre[rA] = 0;
 			}
 		} else if (!strcmp(op, "SUPE")) {
-			if (registre[rB] >= registre[rC]) {
+			if (registre[rC] >= registre[rB]) {
 				registre[rA] = 1;
 			} else {
 				registre[rA] = 0;
 			}
-		}		
+		} else if (!strcmp(op, "JUMP")) {
+			exc = rA;
+		}
 		exc++;
 	}
 }

@@ -9,7 +9,9 @@ void yyerror(char * );
 char * type;
 char * var_name;
 int tmp = 0;
-int used = 0; 
+int used = 0;
+int flag1;
+int flag2; 
 %}
 
 %union{
@@ -49,8 +51,17 @@ Content :	Declaration tPV
 /* Main Bloc*/
 
 BlocMain: 	tINT tMAIN tPO Parameters tPF AO Body Return AF
-AO		:	tAO { incr_profondeur(); }
-AF		:	tAF { decr_profondeur(); }
+AO		:	tAO 
+		{ 
+			incr_profondeur(); 
+			flag1 = current_index();
+			printf("flag1 is %d\n", flag1);
+		}
+AF		:	tAF 
+		{ 
+			decr_profondeur(); 
+			flag2 = current_index();
+		}
 Args 	: 	Arg tV Args | Arg 
 Arg 	: 	Type tTEXT | Type Pointeur ;
 
@@ -71,12 +82,10 @@ Expr 	:	Expr tAFFECT Expr
 			  used++;
 			  printf("tmp = %d\n", tmp);
 			  tmp--;
-			  interpreter();
 			
 			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
 			  printf("tmp = %d\n", tmp);
 			  tmp--;
-			  interpreter();
 			  
 			  ajout_ligneinter("ADD", used-1, used-1, used);
 			  used--;
@@ -96,12 +105,10 @@ Expr 	:	Expr tAFFECT Expr
 			  used++;
 			  printf("tmp = %d\n", tmp);
 			  tmp--;
-			  interpreter();
 			
 			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
 			  printf("tmp = %d\n", tmp);
 			  tmp--;
-			  interpreter();
 			  
 			  ajout_ligneinter("SUB", used-1, used-1, used);
 			  used--;
@@ -175,11 +182,10 @@ Expr 	:	Expr tAFFECT Expr
 			  snprintf(tmp_num, 5, "%d", tmp);
 			  strcat(name, tmp_num);
 			  tmp++;
-
-			  push(type, name);
+			  
+			  push("int", name);
 			  ajout_ligneinter("AFC", used, $1, -1);
 			  ajout_ligneinter("STORE", get_adr(name), used, -1);
-			  interpreter();
 			}
 		|	AppelFunction 
 		;
@@ -187,8 +193,20 @@ Expr 	:	Expr tAFFECT Expr
 /*Expression conditionnelle*/
 
 	/* IF THEN ELSE */
-BlocIf	:	tIF tPO Cond tPF AO Body AF tELSE AO Body AF	
-		|	tIF tPO Cond tPF AO Body AF 
+BlocIf	:	tIF tPO Cond tPF AO Body If_AF tELSE AO Body AF	
+		|	tIF tPO Cond tPF AO Body If_AF 
+		;
+If_AF	:	AF 
+		{
+			if (from_registre(used) == 0) {
+				ajout_ligneinter("JUMP", flag2, -1, -1);
+			}
+			else
+			{
+				ajout_ligneinter("JUMP", flag1 + 1, -1, -1);
+			}
+			interpreter();
+		}  
 		;
 
 	/* WHILE */
@@ -196,10 +214,85 @@ BlocWhile 	: 	tWHILE tPO Cond tPF AO Body AF;
 
 	/* Condition */
 Cond	: 	Expr tEQU Expr 
+		{
+			  interpreter();
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  
+			  ajout_ligneinter("EQU", used-1, used-1, used);
+			  used--;
+			  interpreter();
+		}
 		|	Expr tSUP Expr
+		{
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			  
+			  ajout_ligneinter("SUP", used-1, used-1, used);
+			  used--;
+		}
 		|	Expr tINF Expr
+		{
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			  
+			  ajout_ligneinter("INF", used-1, used-1, used);
+			  used--;
+		}
 		|	Expr tSOE Expr
+		{
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			  
+			  ajout_ligneinter("SUPE", used-1, used-1, used);
+			  used--;
+		}
 		|	Expr tIOE Expr
+		{
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  used++;
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			
+			  ajout_ligneinter("LOAD", used, get_lastline_adr(), -1);
+			  printf("tmp = %d\n", tmp);
+			  tmp--;
+			  interpreter();
+			  
+			  ajout_ligneinter("INFE", used-1, used-1, used);
+			  used--;
+		}
 		|	Expr 	
 		|
 		;

@@ -11,6 +11,8 @@ typedef struct ligneinter{
 void ajout_ligneinter (char * op, int rA, int rB, int rC);
 void afficher_tabinter();
 void interpreter();
+int from_registre(int r);
+int current_index();
 
 #endif
 
