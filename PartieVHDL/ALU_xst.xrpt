@@ -5,7 +5,7 @@
     The structure and the elements are likely to change over the next few releases.
     This means code written to parse this file will need to be revisited each subsequent release.-->
 
-  <application stringID="Xst" timeStamp="Thu Apr 18 11:02:35 2019">
+  <application stringID="Xst" timeStamp="Fri May 10 14:16:52 2019">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
@@ -20,7 +20,7 @@
         </row>
         <row stringID="row" value="2">
           <item stringID="variable" value="PATH"/>
-          <item stringID="value" value="/usr/local/insa/Xilinx.ISE/13.4/ISE_DS/ISE//bin/lin64:/usr/local/Xilinx134.old/13.4/ISE_DS/ISE/bin/lin:/usr/local/jdk1.7.0_45/bin:/home/commetud/GEI/OCaml/.opam/4.04.2/bin:/usr/local/insa/shared/opam/system/bin:/usr/local/insa/lustre-v4-III-dc-linux64/bin/:usr/local/insa/arm-ada/compilateur/gcc-arm-none-eabi/bin:/usr/local/insa/anaconda/bin:/usr/local/insa/bin:/usr/local/insa/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/insa/tina/bin"/>
+          <item stringID="value" value="/usr/local/insa/Xilinx.ISE/13.4/ISE_DS/ISE//bin/lin64:/home/commetud/GEI/OCaml/.opam/4.04.2/bin:/usr/local/insa/shared/opam/system/bin:/usr/local/insa/lustre-v4-III-dc-linux64/bin/:usr/local/insa/arm-ada/compilateur/gcc-arm-none-eabi/bin:/usr/local/insa/anaconda/bin:/usr/local/insa/bin:/usr/local/insa/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/insa/tina/bin"/>
         </row>
         <row stringID="row" value="3">
           <item stringID="variable" value="XILINX"/>
@@ -29,15 +29,15 @@
       </table>
       <item stringID="User_EnvOs" value="OS Information">
         <item stringID="User_EnvOsname" value="Ubuntu"/>
-        <item stringID="User_EnvOsrelease" value="Ubuntu 16.04.5 LTS"/>
+        <item stringID="User_EnvOsrelease" value="Ubuntu 16.04.6 LTS"/>
       </item>
-      <item stringID="User_EnvHost" value="insa-20472"/>
+      <item stringID="User_EnvHost" value="insa-20471"/>
       <table stringID="User_EnvCpu">
         <column stringID="arch"/>
         <column stringID="speed"/>
         <row stringID="row" value="0">
           <item stringID="arch" value="Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz"/>
-          <item stringID="speed" value="4229.709 MHz"/>
+          <item stringID="speed" value="3356.531 MHz"/>
         </row>
       </table>
     </section>

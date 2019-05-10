@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2019-04-18T10:52:38</DateModified>
+  <DateModified>2019-05-10T15:13:17</DateModified>
   <ModuleName>ALU</ModuleName>
   <SummaryTimeStamp>2019-04-18T10:50:16</SummaryTimeStamp>
   <SavedFilePath>/home/th_tran/4IR Projet SysInfo/Projet_System_Info/PartieVHDL/iseconfig/ALU.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>/home/th_tran/4IR Projet SysInfo/Projet_System_Info/PartieVHDL</ImplementationReportsDirectory>
+  <ImplementationReportsDirectory>/home/th_tran/4IR Projet SysInfo/Projet_System_Info/PartieVHDL/</ImplementationReportsDirectory>
   <DateInitialized>2019-04-18T09:43:01</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
