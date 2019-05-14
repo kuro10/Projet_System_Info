@@ -38,6 +38,16 @@ int from_registre(int r) {
 	return registre[r];
 }
 
+void update_rA(int index, int new_rA) {
+	tab_inter[index].rA = new_rA;
+	printf("Something updated here\n");
+	afficher_ligne(tab_inter[index]);
+}
+
+int current_exc() {
+	return exc;
+}
+
 void interpreter() {
 	while(exc < ligne_i){
 		char op[5];
@@ -93,8 +103,9 @@ void interpreter() {
 			} else {
 				registre[rA] = 0;
 			}
-		} else if (!strcmp(op, "JUMP")) {
-			exc = rA;
+		} else if (!strcmp(op, "JMPC")) {
+			if (registre[rB] == 0)
+				exc = rA-1;
 		}
 		exc++;
 	}
