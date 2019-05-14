@@ -1,0 +1,1483 @@
+Terminals unused in grammar
+
+   tCONST
+   tERROR
+
+
+Grammar
+
+    0 $accept: Input $end
+
+    1 Input: BlocFcts BlocMain
+    2      | BlocMain
+    3      | BlocFcts
+
+    4 Body: Content Body
+    5     | %empty
+
+    6 Content: Declaration tPV
+    7        | Expr tPV
+    8        | BlocIf
+    9        | BlocWhile
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO Body Return AF
+
+   11 AO: tAO
+
+   12 AF: tAF
+
+   13 Args: Arg tV Args
+   14     | Arg
+
+   15 Arg: Type tTEXT
+   16    | Type Pointeur
+
+   17 BlocFcts: BlocFct
+   18         | BlocFcts BlocFct
+
+   19 BlocFct: Type Name tPO Parameters tPF AO Body Return AF
+
+   20 Return: tRET Expr tPV
+   21       | %empty
+
+   22 Expr: Expr tAFFECT Expr
+   23     | Expr tPLUS Expr
+   24     | Expr tMOINS Expr
+   25     | Expr tETOILE Expr
+   26     | Expr tSLASH Expr
+   27     | tPO Expr tPF
+   28     | tTEXT
+   29     | tNB
+   30     | AppelFunction
+
+   31 BlocIf: tIF tPO Cond tPF AO Body If_AF tELSE AO Body AF
+   32       | tIF tPO Cond tPF AO Body If_AF
+
+   33 If_AF: AF
+
+   34 BlocWhile: tWHILE tPO Cond tPF AO Body AF
+
+   35 Cond: Expr tEQU Expr
+   36     | Expr tSUP Expr
+   37     | Expr tINF Expr
+   38     | Expr tSOE Expr
+   39     | Expr tIOE Expr
+   40     | Expr
+   41     | %empty
+
+   42 Declaration: Type Names
+   43            | Type Name tAFFECT Expr
+
+   44 Type: tINT
+
+   45 Names: Name
+   46      | Name tV Names
+
+   47 Name: tTEXT
+
+   48 AppelFunction: F_Name tPO Parameters tPF
+
+   49 F_Name: tTEXT
+
+   50 Parameters: F_Args
+   51           | Args
+   52           | %empty
+
+   53 F_Args: F_Arg tV F_Args
+   54       | F_Arg
+
+   55 F_Arg: tNB
+   56      | tTEXT
+
+   57 Pointeur: Etoiles tTEXT
+
+   58 Etoiles: tETOILE
+   59        | tETOILE Etoiles
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+tNB (258) 29 55
+tTEXT (259) 15 28 47 49 56 57
+tPO (260) 10 19 27 31 32 34 48
+tPF (261) 10 19 27 31 32 34 48
+tAO (262) 11
+tAF (263) 12
+tV (264) 13 46 53
+tPV (265) 6 7 20
+tINT (266) 10 44
+tCONST (267)
+tMAIN (268) 10
+tERROR (269)
+tWHILE (270) 34
+tEQU (271) 35
+tSUP (272) 36
+tINF (273) 37
+tSOE (274) 38
+tIOE (275) 39
+tRET (276) 20
+tAFFECT (277) 22 43
+tPLUS (278) 23
+tMOINS (279) 24
+tETOILE (280) 25 58 59
+tSLASH (281) 26
+tIF (282) 31 32
+tELSE (283) 31
+
+
+Nonterminals, with rules where they appear
+
+$accept (29)
+    on left: 0
+Input (30)
+    on left: 1 2 3, on right: 0
+Body (31)
+    on left: 4 5, on right: 4 10 19 31 32 34
+Content (32)
+    on left: 6 7 8 9, on right: 4
+BlocMain (33)
+    on left: 10, on right: 1 2
+AO (34)
+    on left: 11, on right: 10 19 31 32 34
+AF (35)
+    on left: 12, on right: 10 19 31 33 34
+Args (36)
+    on left: 13 14, on right: 13 51
+Arg (37)
+    on left: 15 16, on right: 13 14
+BlocFcts (38)
+    on left: 17 18, on right: 1 3 18
+BlocFct (39)
+    on left: 19, on right: 17 18
+Return (40)
+    on left: 20 21, on right: 10 19
+Expr (41)
+    on left: 22 23 24 25 26 27 28 29 30, on right: 7 20 22 23 24 25
+    26 27 35 36 37 38 39 40 43
+BlocIf (42)
+    on left: 31 32, on right: 8
+If_AF (43)
+    on left: 33, on right: 31 32
+BlocWhile (44)
+    on left: 34, on right: 9
+Cond (45)
+    on left: 35 36 37 38 39 40 41, on right: 31 32 34
+Declaration (46)
+    on left: 42 43, on right: 6
+Type (47)
+    on left: 44, on right: 15 16 19 42 43
+Names (48)
+    on left: 45 46, on right: 42 46
+Name (49)
+    on left: 47, on right: 19 43 45 46
+AppelFunction (50)
+    on left: 48, on right: 30
+F_Name (51)
+    on left: 49, on right: 48
+Parameters (52)
+    on left: 50 51 52, on right: 10 19 48
+F_Args (53)
+    on left: 53 54, on right: 50 53
+F_Arg (54)
+    on left: 55 56, on right: 53 54
+Pointeur (55)
+    on left: 57, on right: 16
+Etoiles (56)
+    on left: 58 59, on right: 57 59
+
+
+State 0
+
+    0 $accept: . Input $end
+
+    tINT  shift, and go to state 1
+
+    Input     go to state 2
+    BlocMain  go to state 3
+    BlocFcts  go to state 4
+    BlocFct   go to state 5
+    Type      go to state 6
+
+
+State 1
+
+   10 BlocMain: tINT . tMAIN tPO Parameters tPF AO Body Return AF
+   44 Type: tINT .
+
+    tMAIN  shift, and go to state 7
+
+    $default  reduce using rule 44 (Type)
+
+
+State 2
+
+    0 $accept: Input . $end
+
+    $end  shift, and go to state 8
+
+
+State 3
+
+    2 Input: BlocMain .
+
+    $default  reduce using rule 2 (Input)
+
+
+State 4
+
+    1 Input: BlocFcts . BlocMain
+    3      | BlocFcts .
+   18 BlocFcts: BlocFcts . BlocFct
+
+    tINT  shift, and go to state 1
+
+    $default  reduce using rule 3 (Input)
+
+    BlocMain  go to state 9
+    BlocFct   go to state 10
+    Type      go to state 6
+
+
+State 5
+
+   17 BlocFcts: BlocFct .
+
+    $default  reduce using rule 17 (BlocFcts)
+
+
+State 6
+
+   19 BlocFct: Type . Name tPO Parameters tPF AO Body Return AF
+
+    tTEXT  shift, and go to state 11
+
+    Name  go to state 12
+
+
+State 7
+
+   10 BlocMain: tINT tMAIN . tPO Parameters tPF AO Body Return AF
+
+    tPO  shift, and go to state 13
+
+
+State 8
+
+    0 $accept: Input $end .
+
+    $default  accept
+
+
+State 9
+
+    1 Input: BlocFcts BlocMain .
+
+    $default  reduce using rule 1 (Input)
+
+
+State 10
+
+   18 BlocFcts: BlocFcts BlocFct .
+
+    $default  reduce using rule 18 (BlocFcts)
+
+
+State 11
+
+   47 Name: tTEXT .
+
+    $default  reduce using rule 47 (Name)
+
+
+State 12
+
+   19 BlocFct: Type Name . tPO Parameters tPF AO Body Return AF
+
+    tPO  shift, and go to state 14
+
+
+State 13
+
+   10 BlocMain: tINT tMAIN tPO . Parameters tPF AO Body Return AF
+
+    tNB    shift, and go to state 15
+    tTEXT  shift, and go to state 16
+    tINT   shift, and go to state 17
+
+    $default  reduce using rule 52 (Parameters)
+
+    Args        go to state 18
+    Arg         go to state 19
+    Type        go to state 20
+    Parameters  go to state 21
+    F_Args      go to state 22
+    F_Arg       go to state 23
+
+
+State 14
+
+   19 BlocFct: Type Name tPO . Parameters tPF AO Body Return AF
+
+    tNB    shift, and go to state 15
+    tTEXT  shift, and go to state 16
+    tINT   shift, and go to state 17
+
+    $default  reduce using rule 52 (Parameters)
+
+    Args        go to state 18
+    Arg         go to state 19
+    Type        go to state 20
+    Parameters  go to state 24
+    F_Args      go to state 22
+    F_Arg       go to state 23
+
+
+State 15
+
+   55 F_Arg: tNB .
+
+    $default  reduce using rule 55 (F_Arg)
+
+
+State 16
+
+   56 F_Arg: tTEXT .
+
+    $default  reduce using rule 56 (F_Arg)
+
+
+State 17
+
+   44 Type: tINT .
+
+    $default  reduce using rule 44 (Type)
+
+
+State 18
+
+   51 Parameters: Args .
+
+    $default  reduce using rule 51 (Parameters)
+
+
+State 19
+
+   13 Args: Arg . tV Args
+   14     | Arg .
+
+    tV  shift, and go to state 25
+
+    $default  reduce using rule 14 (Args)
+
+
+State 20
+
+   15 Arg: Type . tTEXT
+   16    | Type . Pointeur
+
+    tTEXT    shift, and go to state 26
+    tETOILE  shift, and go to state 27
+
+    Pointeur  go to state 28
+    Etoiles   go to state 29
+
+
+State 21
+
+   10 BlocMain: tINT tMAIN tPO Parameters . tPF AO Body Return AF
+
+    tPF  shift, and go to state 30
+
+
+State 22
+
+   50 Parameters: F_Args .
+
+    $default  reduce using rule 50 (Parameters)
+
+
+State 23
+
+   53 F_Args: F_Arg . tV F_Args
+   54       | F_Arg .
+
+    tV  shift, and go to state 31
+
+    $default  reduce using rule 54 (F_Args)
+
+
+State 24
+
+   19 BlocFct: Type Name tPO Parameters . tPF AO Body Return AF
+
+    tPF  shift, and go to state 32
+
+
+State 25
+
+   13 Args: Arg tV . Args
+
+    tINT  shift, and go to state 17
+
+    Args  go to state 33
+    Arg   go to state 19
+    Type  go to state 20
+
+
+State 26
+
+   15 Arg: Type tTEXT .
+
+    $default  reduce using rule 15 (Arg)
+
+
+State 27
+
+   58 Etoiles: tETOILE .
+   59        | tETOILE . Etoiles
+
+    tETOILE  shift, and go to state 27
+
+    $default  reduce using rule 58 (Etoiles)
+
+    Etoiles  go to state 34
+
+
+State 28
+
+   16 Arg: Type Pointeur .
+
+    $default  reduce using rule 16 (Arg)
+
+
+State 29
+
+   57 Pointeur: Etoiles . tTEXT
+
+    tTEXT  shift, and go to state 35
+
+
+State 30
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF . AO Body Return AF
+
+    tAO  shift, and go to state 36
+
+    AO  go to state 37
+
+
+State 31
+
+   53 F_Args: F_Arg tV . F_Args
+
+    tNB    shift, and go to state 15
+    tTEXT  shift, and go to state 16
+
+    F_Args  go to state 38
+    F_Arg   go to state 23
+
+
+State 32
+
+   19 BlocFct: Type Name tPO Parameters tPF . AO Body Return AF
+
+    tAO  shift, and go to state 36
+
+    AO  go to state 39
+
+
+State 33
+
+   13 Args: Arg tV Args .
+
+    $default  reduce using rule 13 (Args)
+
+
+State 34
+
+   59 Etoiles: tETOILE Etoiles .
+
+    $default  reduce using rule 59 (Etoiles)
+
+
+State 35
+
+   57 Pointeur: Etoiles tTEXT .
+
+    $default  reduce using rule 57 (Pointeur)
+
+
+State 36
+
+   11 AO: tAO .
+
+    $default  reduce using rule 11 (AO)
+
+
+State 37
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO . Body Return AF
+
+    tNB     shift, and go to state 40
+    tTEXT   shift, and go to state 41
+    tPO     shift, and go to state 42
+    tINT    shift, and go to state 17
+    tWHILE  shift, and go to state 43
+    tIF     shift, and go to state 44
+
+    $default  reduce using rule 5 (Body)
+
+    Body           go to state 45
+    Content        go to state 46
+    Expr           go to state 47
+    BlocIf         go to state 48
+    BlocWhile      go to state 49
+    Declaration    go to state 50
+    Type           go to state 51
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 38
+
+   53 F_Args: F_Arg tV F_Args .
+
+    $default  reduce using rule 53 (F_Args)
+
+
+State 39
+
+   19 BlocFct: Type Name tPO Parameters tPF AO . Body Return AF
+
+    tNB     shift, and go to state 40
+    tTEXT   shift, and go to state 41
+    tPO     shift, and go to state 42
+    tINT    shift, and go to state 17
+    tWHILE  shift, and go to state 43
+    tIF     shift, and go to state 44
+
+    $default  reduce using rule 5 (Body)
+
+    Body           go to state 54
+    Content        go to state 46
+    Expr           go to state 47
+    BlocIf         go to state 48
+    BlocWhile      go to state 49
+    Declaration    go to state 50
+    Type           go to state 51
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 40
+
+   29 Expr: tNB .
+
+    $default  reduce using rule 29 (Expr)
+
+
+State 41
+
+   28 Expr: tTEXT .
+   49 F_Name: tTEXT .
+
+    tPO       reduce using rule 49 (F_Name)
+    $default  reduce using rule 28 (Expr)
+
+
+State 42
+
+   27 Expr: tPO . Expr tPF
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 55
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 43
+
+   34 BlocWhile: tWHILE . tPO Cond tPF AO Body AF
+
+    tPO  shift, and go to state 56
+
+
+State 44
+
+   31 BlocIf: tIF . tPO Cond tPF AO Body If_AF tELSE AO Body AF
+   32       | tIF . tPO Cond tPF AO Body If_AF
+
+    tPO  shift, and go to state 57
+
+
+State 45
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO Body . Return AF
+
+    tRET  shift, and go to state 58
+
+    $default  reduce using rule 21 (Return)
+
+    Return  go to state 59
+
+
+State 46
+
+    4 Body: Content . Body
+
+    tNB     shift, and go to state 40
+    tTEXT   shift, and go to state 41
+    tPO     shift, and go to state 42
+    tINT    shift, and go to state 17
+    tWHILE  shift, and go to state 43
+    tIF     shift, and go to state 44
+
+    $default  reduce using rule 5 (Body)
+
+    Body           go to state 60
+    Content        go to state 46
+    Expr           go to state 47
+    BlocIf         go to state 48
+    BlocWhile      go to state 49
+    Declaration    go to state 50
+    Type           go to state 51
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 47
+
+    7 Content: Expr . tPV
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tPV      shift, and go to state 61
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+
+State 48
+
+    8 Content: BlocIf .
+
+    $default  reduce using rule 8 (Content)
+
+
+State 49
+
+    9 Content: BlocWhile .
+
+    $default  reduce using rule 9 (Content)
+
+
+State 50
+
+    6 Content: Declaration . tPV
+
+    tPV  shift, and go to state 67
+
+
+State 51
+
+   42 Declaration: Type . Names
+   43            | Type . Name tAFFECT Expr
+
+    tTEXT  shift, and go to state 11
+
+    Names  go to state 68
+    Name   go to state 69
+
+
+State 52
+
+   30 Expr: AppelFunction .
+
+    $default  reduce using rule 30 (Expr)
+
+
+State 53
+
+   48 AppelFunction: F_Name . tPO Parameters tPF
+
+    tPO  shift, and go to state 70
+
+
+State 54
+
+   19 BlocFct: Type Name tPO Parameters tPF AO Body . Return AF
+
+    tRET  shift, and go to state 58
+
+    $default  reduce using rule 21 (Return)
+
+    Return  go to state 71
+
+
+State 55
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   27     | tPO Expr . tPF
+
+    tPF      shift, and go to state 72
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+
+State 56
+
+   34 BlocWhile: tWHILE tPO . Cond tPF AO Body AF
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    $default  reduce using rule 41 (Cond)
+
+    Expr           go to state 73
+    Cond           go to state 74
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 57
+
+   31 BlocIf: tIF tPO . Cond tPF AO Body If_AF tELSE AO Body AF
+   32       | tIF tPO . Cond tPF AO Body If_AF
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    $default  reduce using rule 41 (Cond)
+
+    Expr           go to state 73
+    Cond           go to state 75
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 58
+
+   20 Return: tRET . Expr tPV
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 76
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 59
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO Body Return . AF
+
+    tAF  shift, and go to state 77
+
+    AF  go to state 78
+
+
+State 60
+
+    4 Body: Content Body .
+
+    $default  reduce using rule 4 (Body)
+
+
+State 61
+
+    7 Content: Expr tPV .
+
+    $default  reduce using rule 7 (Content)
+
+
+State 62
+
+   22 Expr: Expr tAFFECT . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 79
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 63
+
+   23 Expr: Expr tPLUS . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 80
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 64
+
+   24 Expr: Expr tMOINS . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 81
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 65
+
+   25 Expr: Expr tETOILE . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 82
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 66
+
+   26 Expr: Expr tSLASH . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 83
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 67
+
+    6 Content: Declaration tPV .
+
+    $default  reduce using rule 6 (Content)
+
+
+State 68
+
+   42 Declaration: Type Names .
+
+    $default  reduce using rule 42 (Declaration)
+
+
+State 69
+
+   43 Declaration: Type Name . tAFFECT Expr
+   45 Names: Name .
+   46      | Name . tV Names
+
+    tV       shift, and go to state 84
+    tAFFECT  shift, and go to state 85
+
+    $default  reduce using rule 45 (Names)
+
+
+State 70
+
+   48 AppelFunction: F_Name tPO . Parameters tPF
+
+    tNB    shift, and go to state 15
+    tTEXT  shift, and go to state 16
+    tINT   shift, and go to state 17
+
+    $default  reduce using rule 52 (Parameters)
+
+    Args        go to state 18
+    Arg         go to state 19
+    Type        go to state 20
+    Parameters  go to state 86
+    F_Args      go to state 22
+    F_Arg       go to state 23
+
+
+State 71
+
+   19 BlocFct: Type Name tPO Parameters tPF AO Body Return . AF
+
+    tAF  shift, and go to state 77
+
+    AF  go to state 87
+
+
+State 72
+
+   27 Expr: tPO Expr tPF .
+
+    $default  reduce using rule 27 (Expr)
+
+
+State 73
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   35 Cond: Expr . tEQU Expr
+   36     | Expr . tSUP Expr
+   37     | Expr . tINF Expr
+   38     | Expr . tSOE Expr
+   39     | Expr . tIOE Expr
+   40     | Expr .
+
+    tEQU     shift, and go to state 88
+    tSUP     shift, and go to state 89
+    tINF     shift, and go to state 90
+    tSOE     shift, and go to state 91
+    tIOE     shift, and go to state 92
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 40 (Cond)
+
+
+State 74
+
+   34 BlocWhile: tWHILE tPO Cond . tPF AO Body AF
+
+    tPF  shift, and go to state 93
+
+
+State 75
+
+   31 BlocIf: tIF tPO Cond . tPF AO Body If_AF tELSE AO Body AF
+   32       | tIF tPO Cond . tPF AO Body If_AF
+
+    tPF  shift, and go to state 94
+
+
+State 76
+
+   20 Return: tRET Expr . tPV
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tPV      shift, and go to state 95
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+
+State 77
+
+   12 AF: tAF .
+
+    $default  reduce using rule 12 (AF)
+
+
+State 78
+
+   10 BlocMain: tINT tMAIN tPO Parameters tPF AO Body Return AF .
+
+    $default  reduce using rule 10 (BlocMain)
+
+
+State 79
+
+   22 Expr: Expr . tAFFECT Expr
+   22     | Expr tAFFECT Expr .
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 22 (Expr)
+
+
+State 80
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   23     | Expr tPLUS Expr .
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 23 (Expr)
+
+
+State 81
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   24     | Expr tMOINS Expr .
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 24 (Expr)
+
+
+State 82
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   25     | Expr tETOILE Expr .
+   26     | Expr . tSLASH Expr
+
+    $default  reduce using rule 25 (Expr)
+
+
+State 83
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   26     | Expr tSLASH Expr .
+
+    $default  reduce using rule 26 (Expr)
+
+
+State 84
+
+   46 Names: Name tV . Names
+
+    tTEXT  shift, and go to state 11
+
+    Names  go to state 96
+    Name   go to state 97
+
+
+State 85
+
+   43 Declaration: Type Name tAFFECT . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 98
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 86
+
+   48 AppelFunction: F_Name tPO Parameters . tPF
+
+    tPF  shift, and go to state 99
+
+
+State 87
+
+   19 BlocFct: Type Name tPO Parameters tPF AO Body Return AF .
+
+    $default  reduce using rule 19 (BlocFct)
+
+
+State 88
+
+   35 Cond: Expr tEQU . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 100
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 89
+
+   36 Cond: Expr tSUP . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 101
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 90
+
+   37 Cond: Expr tINF . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 102
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 91
+
+   38 Cond: Expr tSOE . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 103
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 92
+
+   39 Cond: Expr tIOE . Expr
+
+    tNB    shift, and go to state 40
+    tTEXT  shift, and go to state 41
+    tPO    shift, and go to state 42
+
+    Expr           go to state 104
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 93
+
+   34 BlocWhile: tWHILE tPO Cond tPF . AO Body AF
+
+    tAO  shift, and go to state 36
+
+    AO  go to state 105
+
+
+State 94
+
+   31 BlocIf: tIF tPO Cond tPF . AO Body If_AF tELSE AO Body AF
+   32       | tIF tPO Cond tPF . AO Body If_AF
+
+    tAO  shift, and go to state 36
+
+    AO  go to state 106
+
+
+State 95
+
+   20 Return: tRET Expr tPV .
+
+    $default  reduce using rule 20 (Return)
+
+
+State 96
+
+   46 Names: Name tV Names .
+
+    $default  reduce using rule 46 (Names)
+
+
+State 97
+
+   45 Names: Name .
+   46      | Name . tV Names
+
+    tV  shift, and go to state 84
+
+    $default  reduce using rule 45 (Names)
+
+
+State 98
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   43 Declaration: Type Name tAFFECT Expr .
+
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 43 (Declaration)
+
+
+State 99
+
+   48 AppelFunction: F_Name tPO Parameters tPF .
+
+    $default  reduce using rule 48 (AppelFunction)
+
+
+State 100
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   35 Cond: Expr tEQU Expr .
+
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 35 (Cond)
+
+
+State 101
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   36 Cond: Expr tSUP Expr .
+
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 36 (Cond)
+
+
+State 102
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   37 Cond: Expr tINF Expr .
+
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 37 (Cond)
+
+
+State 103
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   38 Cond: Expr tSOE Expr .
+
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 38 (Cond)
+
+
+State 104
+
+   22 Expr: Expr . tAFFECT Expr
+   23     | Expr . tPLUS Expr
+   24     | Expr . tMOINS Expr
+   25     | Expr . tETOILE Expr
+   26     | Expr . tSLASH Expr
+   39 Cond: Expr tIOE Expr .
+
+    tAFFECT  shift, and go to state 62
+    tPLUS    shift, and go to state 63
+    tMOINS   shift, and go to state 64
+    tETOILE  shift, and go to state 65
+    tSLASH   shift, and go to state 66
+
+    $default  reduce using rule 39 (Cond)
+
+
+State 105
+
+   34 BlocWhile: tWHILE tPO Cond tPF AO . Body AF
+
+    tNB     shift, and go to state 40
+    tTEXT   shift, and go to state 41
+    tPO     shift, and go to state 42
+    tINT    shift, and go to state 17
+    tWHILE  shift, and go to state 43
+    tIF     shift, and go to state 44
+
+    $default  reduce using rule 5 (Body)
+
+    Body           go to state 107
+    Content        go to state 46
+    Expr           go to state 47
+    BlocIf         go to state 48
+    BlocWhile      go to state 49
+    Declaration    go to state 50
+    Type           go to state 51
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 106
+
+   31 BlocIf: tIF tPO Cond tPF AO . Body If_AF tELSE AO Body AF
+   32       | tIF tPO Cond tPF AO . Body If_AF
+
+    tNB     shift, and go to state 40
+    tTEXT   shift, and go to state 41
+    tPO     shift, and go to state 42
+    tINT    shift, and go to state 17
+    tWHILE  shift, and go to state 43
+    tIF     shift, and go to state 44
+
+    $default  reduce using rule 5 (Body)
+
+    Body           go to state 108
+    Content        go to state 46
+    Expr           go to state 47
+    BlocIf         go to state 48
+    BlocWhile      go to state 49
+    Declaration    go to state 50
+    Type           go to state 51
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 107
+
+   34 BlocWhile: tWHILE tPO Cond tPF AO Body . AF
+
+    tAF  shift, and go to state 77
+
+    AF  go to state 109
+
+
+State 108
+
+   31 BlocIf: tIF tPO Cond tPF AO Body . If_AF tELSE AO Body AF
+   32       | tIF tPO Cond tPF AO Body . If_AF
+
+    tAF  shift, and go to state 77
+
+    AF     go to state 110
+    If_AF  go to state 111
+
+
+State 109
+
+   34 BlocWhile: tWHILE tPO Cond tPF AO Body AF .
+
+    $default  reduce using rule 34 (BlocWhile)
+
+
+State 110
+
+   33 If_AF: AF .
+
+    $default  reduce using rule 33 (If_AF)
+
+
+State 111
+
+   31 BlocIf: tIF tPO Cond tPF AO Body If_AF . tELSE AO Body AF
+   32       | tIF tPO Cond tPF AO Body If_AF .
+
+    tELSE  shift, and go to state 112
+
+    $default  reduce using rule 32 (BlocIf)
+
+
+State 112
+
+   31 BlocIf: tIF tPO Cond tPF AO Body If_AF tELSE . AO Body AF
+
+    tAO  shift, and go to state 36
+
+    AO  go to state 113
+
+
+State 113
+
+   31 BlocIf: tIF tPO Cond tPF AO Body If_AF tELSE AO . Body AF
+
+    tNB     shift, and go to state 40
+    tTEXT   shift, and go to state 41
+    tPO     shift, and go to state 42
+    tINT    shift, and go to state 17
+    tWHILE  shift, and go to state 43
+    tIF     shift, and go to state 44
+
+    $default  reduce using rule 5 (Body)
+
+    Body           go to state 114
+    Content        go to state 46
+    Expr           go to state 47
+    BlocIf         go to state 48
+    BlocWhile      go to state 49
+    Declaration    go to state 50
+    Type           go to state 51
+    AppelFunction  go to state 52
+    F_Name         go to state 53
+
+
+State 114
+
+   31 BlocIf: tIF tPO Cond tPF AO Body If_AF tELSE AO Body . AF
+
+    tAF  shift, and go to state 77
+
+    AF  go to state 115
+
+
+State 115
+
+   31 BlocIf: tIF tPO Cond tPF AO Body If_AF tELSE AO Body AF .
+
+    $default  reduce using rule 31 (BlocIf)

@@ -1,0 +1,12 @@
+int main() {
+	int a = 1;
+	if (1) {
+		int a = 2;
+		int b;
+		int c;
+		if (a == 2) {
+			int d = 5;
+		}
+	}
+	int d;
+}
