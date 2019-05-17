@@ -21,6 +21,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 USE ieee.std_logic_arith.ALL;
 USE ieee.std_logic_unsigned.ALL; 
+USE ieee.numeric_std.all;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -53,13 +54,16 @@ begin
 	Sadd 	<= 	('0'&A) + ('0'&B);
 	Ssou 	<= 	('0'&A) - ('0'&B);
 	Smul 	<= 	A * B; 
-	--Sdiv 	<= 	A / B; --('0' & A) / ('0' & B);
+	--Sdiv 	<= 	std_logic_vector(to_unsigned(to_integer(unsigned(A)) / to_integer(unsigned(B)),9)); --('0' & A) / ('0' & B);
+	--Sdiv  <=    std_logic_vector(to_signed(to_integer(unsigned(A) / unsigned(B)),9));
+	--R <= std_logic_vector(to_signed(to_integer(signed(X) / signed(Y)),32));
 	
 	Stmp 	<= 	Sadd when Op=x"1" else
 					Smul(8 downto 0) when Op=x"2" else	
 					Ssou when Op=x"3" else
+					--Sdiv(8 downto 0) when Op=x"4" else
+					('0' & A) when Op=x"5" else
 					(others => '0');
-					--Sdiv when Op=x"04" ;
 					
 	S 		<= 	Stmp(7 downto 0);
 	C 		<= 	Stmp(8);

@@ -68,7 +68,7 @@ PROCESS
 		
 BEGIN
 		wait until CLK'EVENT and CLK = '1';
-		if RST = '1' then 
+		if RST = '0' then 
 			registre <= (others => ( others => '0'));
 		else
 			if W = '1' then 
