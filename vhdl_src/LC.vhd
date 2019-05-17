@@ -38,7 +38,7 @@ architecture Behavioral of LC is
 
 begin
 
-	out_LC <= ('1'& in_LC(3 downto 0)) when in_LC = x"06" or in_LC = x"05" or in_LC = x"01" or in_LC = x"02" or in_LC = x"03" or in_LC = x"04" else
+	out_LC <= ('1'& in_LC(3 downto 0)) when in_LC = x"07" or in_LC = x"08" or in_LC = x"06" or in_LC = x"05" or in_LC = x"01" or in_LC = x"02" or in_LC = x"03" or in_LC = x"04" else
 				 ('0'& in_LC(3 downto 0));
 
 end Behavioral;

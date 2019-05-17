@@ -62,9 +62,9 @@ BEGIN
 		memoire <= ( others => ( others => '0'));
 	else
 		if RW = '1' then --Mode lecture
-			memoire(to_integer(unsigned(adr))) <= INPUT;
-		else --Mode ecriture
 			OUTPUT <= memoire(to_integer(unsigned(adr)));
+		else --Mode ecriture
+			memoire(to_integer(unsigned(adr))) <= INPUT;
 		end if;
 	end if;
 

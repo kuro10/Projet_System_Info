@@ -27,7 +27,7 @@ architecture beh of instr_memory is
 		3 => x"02030001",
 		4 => x"03040001", 
 		5 => x"05050001",
---		6 => x"00010102",
+		6 => x"07060003",
 		others => x"FFFFFFFF"
 	);
 

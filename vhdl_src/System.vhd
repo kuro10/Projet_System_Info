@@ -132,11 +132,14 @@ architecture Structural of System is
 	--INPUT MUX DI--
 	signal A_muxDI : STD_LOGIC_VECTOR(15 downto 0);
 	signal B_muxDI : STD_LOGIC_VECTOR(15 downto 0);
+
 	
 
 	
    --INPUT BdR--
 	signal auxB : STD_LOGIC_VECTOR(15 downto 0);
+	
+
    
    signal DATA :  std_logic_vector(7 downto 0);
    signal RST : std_logic;
@@ -156,6 +159,14 @@ architecture Structural of System is
 	--OUTPUT ALU--
 	signal S : std_logic_vector(7 downto 0);
    signal Flag : std_logic_vector(3 downto 0);
+	
+		
+	--INPUT MUX Mem--
+	signal B_muxMem : STD_LOGIC_VECTOR(15 downto 0);
+	
+	--INPUT BdM--
+	signal INPUT : STD_LOGIC_VECTOR(7 downto 0);
+	signal OUTPUT : STD_LOGIC_VECTOR(7 downto 0);
 	
 	--output LC
 	signal outLC : std_logic_vector(4 downto 0);
@@ -238,7 +249,6 @@ begin
          Flag => Flag
 	);
 			
-
 	EXMem: Pipeline PORT MAP (
           inA => ex.A,
 			 inOp => ex.Op,
@@ -246,10 +256,31 @@ begin
 			 inC => ex.C,
 			 outA => mem.A,
 			 outOp => mem.Op,
-			 outB => mem.B,
+			 outB => B_muxMem,
 			 outC => mem.C
        );
+		 
+	LC_mem: LC PORT MAP (
+			in_LC => mem.Op,
+			out_LC => outLC
+	);
 
+	MUX_mem: Multiplexeur PORT MAP (
+		A_MUX => x"00" & OUTPUT,
+		B_MUX => B_muxMem ,
+		Op_MUX => mem.Op,
+		Z_MUX => mem.B
+	);
+	
+	BM: BdM PORT MAP ( 
+	      adr => B_muxMem(7 downto 0),
+         INPUT => INPUT,
+         RW => outLC(4),
+         RST => RST,
+         CLK => CLK,
+         OUTPUT => OUTPUT
+	);
+	
 	MemRE: Pipeline PORT MAP (
           inA => mem.A,
 			 inOp => mem.Op,
@@ -264,7 +295,7 @@ begin
 	LC_RE : LC PORT MAP (
 			 in_LC => re.Op,
 			 out_LC => outLC
-		 );
+	);
 
 	
 

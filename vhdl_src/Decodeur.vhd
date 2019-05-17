@@ -48,9 +48,9 @@ architecture Behavioral of Decodeur is
 	
 		tmpA <= x"00" & Input(23 downto 16);
 		tmpOP <= Input(31 downto 24);
-		tmpB <= Input(15 downto 0) when tmpOP = x"06" else
+		tmpB <= Input(15 downto 0) when tmpOP = x"06" or tmpOP = x"07" else
 				  x"00" & Input(15 downto 8);
-		tmpC <= x"00" when tmpOP = x"06" else
+		tmpC <= x"00" when tmpOP = x"06" or tmpOP = x"07" else
 				  x"00" & Input(7 downto 0);
 		 
 		 outOP_DEC <= tmpOP;

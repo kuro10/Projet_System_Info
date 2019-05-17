@@ -42,7 +42,7 @@ begin
 
 	Z_MUX <= A_MUX when Op_MUX = x"06" else 
 				B_MUX when Op_MUX = x"05" or Op_MUX = x"04" or Op_MUX = x"03" or Op_MUX = x"02" or Op_MUX = x"01" else
-				x"FFFF";
+				A_MUX;
 	
 end Behavioral;
 
