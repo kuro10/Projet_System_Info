@@ -63,6 +63,7 @@ begin
 					Ssou when Op=x"3" else
 					--Sdiv(8 downto 0) when Op=x"4" else
 					('0' & A) when Op=x"5" else
+					('0' & B) when Op=x"8" else
 					(others => '0');
 					
 	S 		<= 	Stmp(7 downto 0);

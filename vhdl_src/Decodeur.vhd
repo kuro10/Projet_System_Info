@@ -45,12 +45,13 @@ architecture Behavioral of Decodeur is
 	signal tmpOP : STD_LOGIC_VECTOR(7 downto 0);
 	begin
 		
-	
-		tmpA <= x"00" & Input(23 downto 16);
-		tmpOP <= Input(31 downto 24);
+	   tmpOP <= Input(31 downto 24);
+		tmpA <= Input(23 downto 8) when tmpOP = x"08" else
+					x"00" & Input(23 downto 16);
 		tmpB <= Input(15 downto 0) when tmpOP = x"06" or tmpOP = x"07" else
+				  x"0000" when tmpOP = x"08" else
 				  x"00" & Input(15 downto 8);
-		tmpC <= x"00" when tmpOP = x"06" or tmpOP = x"07" else
+		tmpC <= x"0000" when tmpOP = x"06" or tmpOP = x"07" else
 				  x"00" & Input(7 downto 0);
 		 
 		 outOP_DEC <= tmpOP;

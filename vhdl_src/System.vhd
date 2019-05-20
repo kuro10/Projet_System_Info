@@ -86,6 +86,34 @@ architecture Structural of System is
            Op_MUX : in  STD_LOGIC_VECTOR (7 downto 0);
            Z_MUX : out  STD_LOGIC_VECTOR (15 downto 0));
 	end COMPONENT;
+
+	COMPONENT MUX1
+	  Port ( A_MUX1 : in  STD_LOGIC_VECTOR (15 downto 0);
+           B_MUX1 : in  STD_LOGIC_VECTOR (15 downto 0);
+           Op_MUX1 : in  STD_LOGIC_VECTOR (7 downto 0);
+           Z_MUX1 : out  STD_LOGIC_VECTOR (15 downto 0));
+	end COMPONENT;
+	
+	COMPONENT MUX2
+	  Port ( A_MUX2 : in  STD_LOGIC_VECTOR (15 downto 0);
+           B_MUX2 : in  STD_LOGIC_VECTOR (15 downto 0);
+           Op_MUX2 : in  STD_LOGIC_VECTOR (7 downto 0);
+           Z_MUX2 : out  STD_LOGIC_VECTOR (15 downto 0));
+	end COMPONENT;
+	
+	COMPONENT MUX3
+	  Port ( A_MUX3 : in  STD_LOGIC_VECTOR (15 downto 0);
+           B_MUX3 : in  STD_LOGIC_VECTOR (15 downto 0);
+           Op_MUX3 : in  STD_LOGIC_VECTOR (7 downto 0);
+           Z_MUX3 : out  STD_LOGIC_VECTOR (15 downto 0));
+	end COMPONENT;
+	
+	COMPONENT MUX4
+	  Port ( A_MUX4 : in  STD_LOGIC_VECTOR (15 downto 0);
+           B_MUX4 : in  STD_LOGIC_VECTOR (15 downto 0);
+           Op_MUX4 : in  STD_LOGIC_VECTOR (7 downto 0);
+           Z_MUX4 : out  STD_LOGIC_VECTOR (15 downto 0));
+	end COMPONENT;
 	 
    COMPONENT BdR
     PORT(
@@ -119,7 +147,7 @@ architecture Structural of System is
 	COMPONENT LC
 	 PORT (
 			in_LC : in STD_LOGIC_VECTOR(7 downto 0);
-			out_LC : out STD_LOGIC_VECTOR(4 downto 0)
+			out_LC : out STD_LOGIC_VECTOR(5 downto 0)
 			);
 	END COMPONENT;
 
@@ -160,8 +188,10 @@ architecture Structural of System is
 	signal S : std_logic_vector(7 downto 0);
    signal Flag : std_logic_vector(3 downto 0);
 	
+	--OUTPUT MUX Mex1--
+	signal OUT_MUX : std_logic_vector(15 downto 0); 
 		
-	--INPUT MUX Mem--
+	--INPUT MUX Mem2--
 	signal B_muxMem : STD_LOGIC_VECTOR(15 downto 0);
 	
 	--INPUT BdM--
@@ -169,7 +199,7 @@ architecture Structural of System is
 	signal OUTPUT : STD_LOGIC_VECTOR(7 downto 0);
 	
 	--output LC
-	signal outLC : std_logic_vector(4 downto 0);
+	signal outLC : std_logic_vector(5 downto 0);
 begin
 	
 
@@ -203,7 +233,7 @@ begin
          adrB => auxB(3 downto 0),
          --adrW => adrW,
          adrW => re.A(3 downto 0),
-			W => outLC(4),
+			W => outLC(5),
          DATA => re.B(7 downto 0), 
          RST => RST,
          CLK => CLK,
@@ -211,11 +241,11 @@ begin
          QB => QB
 		);
 	
-	MUX_DI: Multiplexeur PORT MAP (
-			A_MUX => A_muxDI,
-         B_MUX => x"00" & QA,
-         Op_MUX => di.Op,
-         Z_MUX => di.B
+	MUX_DI: MUX1 PORT MAP (
+			A_MUX1 => A_muxDI,
+         B_MUX1 => x"00" & QA,
+         Op_MUX1 => di.Op,
+         Z_MUX1 => di.B
 	);
 		 
 	DIEX: Pipeline PORT MAP (
@@ -234,11 +264,11 @@ begin
 			out_LC => outLC
 		);
 		
-	MUX_EX: Multiplexeur PORT MAP (
-		A_MUX => A,
-		B_MUX => x"00" & S,
-		Op_MUX => ex.Op,
-		Z_MUX => ex.B
+	MUX_EX: MUX2 PORT MAP (
+		A_MUX2 => A,
+		B_MUX2 => x"00" & S,
+		Op_MUX2 => ex.Op,
+		Z_MUX2 => ex.B
 	);
 
 	UAL: ALU PORT MAP (
@@ -264,17 +294,28 @@ begin
 			in_LC => mem.Op,
 			out_LC => outLC
 	);
+	
+	MUX_mem1: MUX3 PORT MAP (
+		A_MUX3 => mem.A,
+		B_MUX3 => B_muxMem,
+		--A_MUX => B_muxMem,
+		--B_MUX => x"00" & OUTPUT,
+		Op_MUX3 => mem.Op,
+		Z_MUX3 => OUT_MUX 
+	);
 
-	MUX_mem: Multiplexeur PORT MAP (
-		A_MUX => x"00" & OUTPUT,
-		B_MUX => B_muxMem ,
-		Op_MUX => mem.Op,
-		Z_MUX => mem.B
+	MUX_mem2: MUX4 PORT MAP (
+		A_MUX4 => x"00" & OUTPUT,
+		B_MUX4 => B_muxMem,
+		--A_MUX => B_muxMem,
+		--B_MUX => x"00" & OUTPUT,
+		Op_MUX4 => mem.Op,
+		Z_MUX4 => mem.B
 	);
 	
 	BM: BdM PORT MAP ( 
-	      adr => B_muxMem(7 downto 0),
-         INPUT => INPUT,
+	      adr => OUT_MUX(7 downto 0),
+         INPUT => B_muxMem(7 downto 0),
          RW => outLC(4),
          RST => RST,
          CLK => CLK,

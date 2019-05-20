@@ -48,7 +48,7 @@ end BdR;
 architecture Behavioral of BdR is
 	type REGTYPE is array(0 to 15) of STD_LOGIC_VECTOR (7 downto 0);
 	signal registre : REGTYPE := 
-	( 0 => x"01", 1 => x"10", others => x"00");
+	( 0 => x"CF", 1 => x"FC", others => x"00");
 	
 	signal index : INTEGER;
 	signal outA : STD_LOGIC_VECTOR (7 downto 0);

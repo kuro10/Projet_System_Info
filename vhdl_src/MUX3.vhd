@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    13:09:26 05/17/2019 
+-- Create Date:    13:27:39 05/17/2019 
 -- Design Name: 
--- Module Name:    LC - Behavioral 
+-- Module Name:    Multiplexeur - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,17 +29,19 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity LC is
-    Port ( in_LC : in  STD_LOGIC_VECTOR (7 downto 0);
-           out_LC : out  STD_LOGIC_VECTOR(5 downto 0));
-end LC;
+entity MUX3 is
+    Port ( A_MUX3 : in  STD_LOGIC_VECTOR (15 downto 0);
+           B_MUX3 : in  STD_LOGIC_VECTOR (15 downto 0);
+           Op_MUX3 : in  STD_LOGIC_VECTOR (7 downto 0);
+           Z_MUX3 : out  STD_LOGIC_VECTOR (15 downto 0));
+end MUX3;
 
-architecture Behavioral of LC is
+architecture Behavioral of MUX3 is
 
 begin
 
-	out_LC <= ("11"& in_LC(3 downto 0)) when in_LC = x"07" or in_LC = x"06" or in_LC = x"05" or in_LC = x"01" or in_LC = x"02" or in_LC = x"03" or in_LC = x"04" else
-				 ("00"& in_LC(3 downto 0)) when in_LC = x"08" else ("00" & x"0");
-
+	Z_MUX3 <= A_MUX3 when Op_MUX3 = x"08" else 
+				B_MUX3 when Op_MUX3 = x"07" or Op_MUX3 = x"06" or Op_MUX3 = x"05" or Op_MUX3 = x"04" or Op_MUX3 = x"03" or Op_MUX3 = x"02" or Op_MUX3 = x"01";
+	
 end Behavioral;
 

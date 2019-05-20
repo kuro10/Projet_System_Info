@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    13:27:39 05/17/2019 
+-- Create Date:    13:38:56 05/14/2019 
 -- Design Name: 
--- Module Name:    Multiplexeur - Behavioral 
+-- Module Name:    Pipeline - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,20 +29,25 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Multiplexeur is
-    Port ( A_MUX : in  STD_LOGIC_VECTOR (15 downto 0);
-           B_MUX : in  STD_LOGIC_VECTOR (15 downto 0);
-           Op_MUX : in  STD_LOGIC_VECTOR (7 downto 0);
-           Z_MUX : out  STD_LOGIC_VECTOR (15 downto 0));
-end Multiplexeur;
+entity Gest_alea is
+    Port ( inA : in  STD_LOGIC_VECTOR(15 downto 0);
+           inOP : in  STD_LOGIC_VECTOR(7 downto 0);
+           inB : in  STD_LOGIC_VECTOR(15 downto 0);
+           inC : in  STD_LOGIC_VECTOR(15 downto 0);
+           outA : out  STD_LOGIC_VECTOR(15 downto 0);
+           outOP : out  STD_LOGIC_VECTOR(7 downto 0);
+           outB : out  STD_LOGIC_VECTOR(15 downto 0);
+           outC : out  STD_LOGIC_VECTOR(15 downto 0));
+end Gest_alea;
 
-architecture Behavioral of Multiplexeur is
+architecture Behavioral of Gest_alea is
 
 begin
 
-	Z_MUX <= A_MUX when Op_MUX = x"06" else 
-				B_MUX when Op_MUX = x"05" or Op_MUX = x"04" or Op_MUX = x"03" or Op_MUX = x"02" or Op_MUX = x"01" else
-				A_MUX;
-	
+	outA <= inA;
+	outOP <= inOP;
+	outB <= inB;
+	outC <= inC;
+
 end Behavioral;
 
