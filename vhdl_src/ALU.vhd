@@ -32,7 +32,8 @@ USE ieee.numeric_std.all;
 --use UNISIM.VComponents.all;
 
 entity ALU is
-    Port ( A : in  STD_LOGIC_VECTOR (7 downto 0);
+    Port ( --CLK : in STD_LOGIC;
+			  A : in  STD_LOGIC_VECTOR (7 downto 0);
            B : in  STD_LOGIC_VECTOR (7 downto 0);
            S : out  STD_LOGIC_VECTOR (7 downto 0);
            Op : in  STD_LOGIC_VECTOR (3 downto 0);

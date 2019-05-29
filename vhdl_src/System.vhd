@@ -31,8 +31,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity System is 
 	Port ( 
-	CLK : in STD_LOGIC;
-	sel : IN STD_LOGIC_VECTOR(15 downto 0) );
+	CLK : in STD_LOGIC
+	--sel : IN STD_LOGIC_VECTOR(15 downto 0) );
+	);
 end System;
 
 architecture Structural of System is
@@ -47,6 +48,13 @@ architecture Structural of System is
 			q: out std_logic_vector(LEN_INSTR-1 downto 0)
 		);
 	end COMPONENT;
+	
+	--COMPONENT MUX0
+    --Port ( CLK : in STD_LOGIC;
+	--		  q_MUX0 : in  STD_LOGIC_VECTOR (31 downto 0);
+    --       alea_MUX0 : in  STD_LOGIC;
+    --       out_MUX0 : out  STD_LOGIC_VECTOR (31 downto 0));
+	--end COMPONENT;
 
 	COMPONENT Decodeur
 		Port ( Input : in STD_LOGIC_VECTOR (31 downto 0);
@@ -58,7 +66,8 @@ architecture Structural of System is
 	end COMPONENT;
 
 	COMPONENT Pipeline
-		 Port ( inA : in  STD_LOGIC_VECTOR(15 downto 0);
+		 Port ( CLK : in STD_LOGIC;
+				  inA : in  STD_LOGIC_VECTOR(15 downto 0);
 				  inOP : in  STD_LOGIC_VECTOR(7 downto 0);
 				  inB : in  STD_LOGIC_VECTOR(15 downto 0);
 				  inC : in  STD_LOGIC_VECTOR(15 downto 0);
@@ -79,13 +88,6 @@ architecture Structural of System is
          OUTPUT : OUT  std_logic_vector(7 downto 0)
         );
    END COMPONENT;
-	
-	COMPONENT Multiplexeur
-	  Port ( A_MUX : in  STD_LOGIC_VECTOR (15 downto 0);
-           B_MUX : in  STD_LOGIC_VECTOR (15 downto 0);
-           Op_MUX : in  STD_LOGIC_VECTOR (7 downto 0);
-           Z_MUX : out  STD_LOGIC_VECTOR (15 downto 0));
-	end COMPONENT;
 
 	COMPONENT MUX1
 	  Port ( A_MUX1 : in  STD_LOGIC_VECTOR (15 downto 0);
@@ -116,7 +118,7 @@ architecture Structural of System is
 	end COMPONENT;
 	 
    COMPONENT BdR
-    PORT(
+    PORT(--alea_in : IN STD_LOGIC;
          adrA : IN  std_logic_vector(3 downto 0);
          adrB : IN  std_logic_vector(3 downto 0);
          adrW : IN  std_logic_vector(3 downto 0);
@@ -126,6 +128,7 @@ architecture Structural of System is
          CLK : IN  std_logic;
          QA : OUT  std_logic_vector(7 downto 0);
          QB : OUT  std_logic_vector(7 downto 0)
+			--alea_bdr : OUT STD_LOGIC
         );
    END COMPONENT; 	 
 		 
@@ -146,10 +149,33 @@ architecture Structural of System is
 	
 	COMPONENT LC
 	 PORT (
+			CLK : in STD_LOGIC;
 			in_LC : in STD_LOGIC_VECTOR(7 downto 0);
 			out_LC : out STD_LOGIC_VECTOR(5 downto 0)
 			);
 	END COMPONENT;
+	
+	COMPONENT Gest_alea
+   Port (  CLK : in STD_LOGIC;
+			  in_LiOP : in  STD_LOGIC_VECTOR(7 downto 0);
+           in_LiB : in  STD_LOGIC_VECTOR(15 downto 0);
+           in_LiC : in  STD_LOGIC_VECTOR(15 downto 0);
+           in_DiOP : in  STD_LOGIC_VECTOR(7 downto 0);
+			  in_DiA : in  STD_LOGIC_VECTOR(15 downto 0);
+           in_ExOP : in  STD_LOGIC_VECTOR(7 downto 0);
+           in_ExA : in  STD_LOGIC_VECTOR(15 downto 0);
+           in_memOP : in  STD_LOGIC_VECTOR(7 downto 0);
+			  in_memA : in  STD_LOGIC_VECTOR(15 downto 0);
+			  --alea_bdr : in STD_LOGIC;
+			  alea : out STD_LOGIC
+			  );
+	END COMPONENT;
+
+	--Compteur for IP--
+	signal cpt : std_logic_vector(15 downto 0);
+
+	--Intermediary signal for q--
+	signal q_aux : std_logic_vector(31 downto 0);
 
 	--OUTPUT INSTR_MEMORY
 	signal q : std_logic_vector(31 downto 0);	
@@ -174,6 +200,7 @@ architecture Structural of System is
 	--OUTPUT BdR--
    signal QA : std_logic_vector(7 downto 0);
    signal QB :  std_logic_vector(7 downto 0);
+	signal alea_bdr : std_logic;
 	
 	--INPUT MUX EX-
 	signal A_muxEX : STD_LOGIC_VECTOR(15 downto 0);
@@ -200,17 +227,35 @@ architecture Structural of System is
 	
 	--output LC
 	signal outLC : std_logic_vector(5 downto 0);
-begin
 	
+	--output ALEA 
+	signal alea : std_logic;
+	
+begin
+
+	process
+	begin
+		wait until CLK'EVENT and CLK = '1';
+		if alea = 0 then
+			cpt <= cpt + 1;
+		end if;
+	end process;
 
 	--Implementing AFC
 	IP: instr_memory PORT MAP (
-		sel => sel,
+		sel => cpt,
 		q => q
 	);
 	
+	--MUX_ALEA : MUX0 PORT MAP (
+	--	CLK => CLK,
+	--	q_MUX0 => q,
+   --   alea_MUX0 => alea,
+    --  out_MUX0 => q_aux
+	--);
+	
 	Dec: decodeur PORT MAP (
-		Input => q,
+		Input => q,--q_aux,
 		outA_DEC => li.A,
 		outOP_DEC => li.Op,
 		outB_DEC => li.B,
@@ -218,6 +263,7 @@ begin
 	);
 	
 	LIDI: Pipeline PORT MAP (
+			 CLK => CLK,
           inA => li.A,
 			 inOp => li.Op,
 			 inB => li.B,
@@ -229,6 +275,7 @@ begin
        );
 		 
 	BR: bdr PORT MAP (
+			--alea_in => alea,
 			adrA => A_muxDI(3 downto 0),
          adrB => auxB(3 downto 0),
          --adrW => adrW,
@@ -239,6 +286,7 @@ begin
          CLK => CLK,
          QA => QA, 
          QB => QB
+			--alea_bdr => alea_bdr
 		);
 	
 	MUX_DI: MUX1 PORT MAP (
@@ -249,6 +297,7 @@ begin
 	);
 		 
 	DIEX: Pipeline PORT MAP (
+			 CLK => CLK,
           inA => di.A,
 			 inOp => di.Op,
 			 inB => di.B,
@@ -260,6 +309,7 @@ begin
        );
 		 
 	LC_EX: LC PORT MAP (
+			CLK => CLK,
 			in_LC => ex.Op,
 			out_LC => outLC
 		);
@@ -280,6 +330,7 @@ begin
 	);
 			
 	EXMem: Pipeline PORT MAP (
+			 CLK => CLK,
           inA => ex.A,
 			 inOp => ex.Op,
 			 inB => ex.B,
@@ -291,6 +342,7 @@ begin
        );
 		 
 	LC_mem: LC PORT MAP (
+			CLK => CLK,
 			in_LC => mem.Op,
 			out_LC => outLC
 	);
@@ -323,6 +375,7 @@ begin
 	);
 	
 	MemRE: Pipeline PORT MAP (
+			 CLK => CLK,
           inA => mem.A,
 			 inOp => mem.Op,
 			 inB => mem.B,
@@ -334,9 +387,25 @@ begin
        );
 		 
 	LC_RE : LC PORT MAP (
+			 CLK => CLK,
 			 in_LC => re.Op,
 			 out_LC => outLC
 	);
+	
+	GA : Gest_alea PORT MAP (
+			  CLK => CLK,
+			  in_LiOP => li.Op,
+           in_LiB => li.B,
+           in_LiC => li.C,
+           in_DiOP => di.Op,
+			  in_DiA => di.A,
+           in_ExOP => ex.Op,
+           in_ExA => ex.A,
+           in_memOP => mem.Op,
+			  in_memA => mem.A,
+			  --alea_bdr => alea_bdr,
+			  alea => alea
+	 );
 
 	
 

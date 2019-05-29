@@ -30,7 +30,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity Pipeline is
-    Port ( inA : in  STD_LOGIC_VECTOR(15 downto 0);
+    Port ( CLK : in STD_LOGIC;
+			  inA : in  STD_LOGIC_VECTOR(15 downto 0);
            inOP : in  STD_LOGIC_VECTOR(7 downto 0);
            inB : in  STD_LOGIC_VECTOR(15 downto 0);
            inC : in  STD_LOGIC_VECTOR(15 downto 0);
@@ -43,11 +44,15 @@ end Pipeline;
 architecture Behavioral of Pipeline is
 
 begin
-
-	outA <= inA;
-	outOP <= inOP;
-	outB <= inB;
-	outC <= inC;
+	process
+	begin
+		wait until CLK'EVENT and CLK = '1';
+		outA <= inA;
+		outOP <= inOP;
+		outB <= inB;
+		outC <= inC;
+		
+	end process;
 
 end Behavioral;
 

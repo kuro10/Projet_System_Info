@@ -34,7 +34,8 @@ use STD.TEXTIO.ALL;
 --use UNISIM.VComponents.all;
 
 entity BdR is
-    Port ( adrA : in  STD_LOGIC_VECTOR (3 downto 0);
+    Port ( --alea_in : in STD_LOGIC;
+			  adrA : in  STD_LOGIC_VECTOR (3 downto 0);
            adrB : in  STD_LOGIC_VECTOR (3 downto 0);
            adrW : in  STD_LOGIC_VECTOR (3 downto 0);
            W : in  STD_LOGIC;
@@ -42,7 +43,9 @@ entity BdR is
            RST : in  STD_LOGIC;
            CLK : in  STD_LOGIC;
            QA : out  STD_LOGIC_VECTOR (7 downto 0);
-           QB : out  STD_LOGIC_VECTOR (7 downto 0));
+           QB : out  STD_LOGIC_VECTOR (7 downto 0)
+			  --alea_bdr : out STD_LOGIC
+			  );
 end BdR;
 
 architecture Behavioral of BdR is
@@ -63,6 +66,8 @@ begin
 	
 	QB <= DATA when adrW = adrB and W = '1' else
 			  registre(to_integer(unsigned(adrB)));
+	
+	--alea_bdr <= '0' when alea_in = '1' and W = '1';
 	
 PROCESS
 		

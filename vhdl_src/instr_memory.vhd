@@ -29,6 +29,12 @@ architecture beh of instr_memory is
 		5 => x"05050001",
 		6 => x"07060003",
 		7 => x"08000000",
+		8 => x"0601FF0E",
+		9 => x"0602FF08",
+		10 => x"0601FF0C",
+		11 => x"05020100",
+		12 => x"0600FF01",
+		13 => x"01000000", 
 		others => x"FFFFFFFF"
 	);
 

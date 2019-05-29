@@ -4,3 +4,5 @@
 'make' 
 
 './compile < input_test'
+
+#Remember to correct GA and adjust NOP to condition
